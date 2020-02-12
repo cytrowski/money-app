@@ -1,0 +1,18 @@
+body {
+    background: #E5E5E5;
+}
+
+$table-head-color: #100DAE;
+$table-first-color: #fff;
+$table-second-color: #F4F4F4;
+$main-color: linear-gradient(#2DB626, #AEDC49);
+
+@mixin FlexCenter($justify, $direction) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+
+

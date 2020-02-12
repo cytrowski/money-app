@@ -7,7 +7,56 @@
   <title>Money App</title>
 </head>
 <body>
-  TEST
+  <!-- navigation -->
+  <nav>
+    <ul class="nav">
+      <li class="nav__pick"></li>
+      <li class="nav__pick"></li>
+    </ul>
+  </nav>
+  <!-- budget % -->
+  <div class="budget">
+    <div class="budget__text">Wykorzystano budzet: </div>
+    <div class="budget__circle"></div>
+  </div>
+  <div class="container">
+  <div class="expense-stats">
+  <!-- form -->
+  <form class="expense">
+    <div class="input-group">
+      <div class="input-group__info">
+        Dodaj wydatek:
+      </div>
+      <input type="text" id="name" class="form-control" required>
+      <input type="text" id="price" class="form-control" required>
+      <div class="submit">
+        <input type="submit" class="btn" value="Dodaj">
+      </div>
+    </div>
+  </form>
+  <!-- data from form -->
+  <div class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Nazwa</th>
+          <th>Cena</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <th>01.01.2020</th>
+              <th>Pierogi testowe</th>
+              <th>22,90</th>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- stats from all data -->
+<div class="stats"></div>
+</div>
   <script src="assets/bundle.js"></script>
 </body>
 </html>
