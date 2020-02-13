@@ -1,0 +1,70 @@
+$table-head-color: #100DAE;
+$table-first-color: #fff;
+$table-second-color: #F4F4F4;
+$main-color: linear-gradient(#2DB626, #AEDC49);
+$box-shadow: rgb(185, 185, 185);
+
+@mixin FlexCenter($justify, $direction) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+nav {
+    height: 100%;
+    width: 150px;
+    background: $main-color;
+    position: absolute;
+    left: 0;
+    top:0;
+    @include FlexCenter(center, row);
+    margin: 0;
+    padding: 0;
+    box-shadow: 5px 2px 15px $box-shadow;
+
+    
+    .nav {
+        list-style: none;
+        margin-left: -40px;
+        @include FlexCenter(center, column);
+        height: 100%;
+        width: 100%;
+        z-index: 5;
+
+        
+        &__pick {   
+            padding-top: 10px;
+            padding-bottom: 10px;
+            transition: all 0.25s;
+            width: 100%;
+            color: $table-first-color;
+            cursor: pointer;
+            text-align: center;
+            
+            &:hover {
+                background: rgba(0, 0, 0, 0.157);
+                letter-spacing: 0.08em;
+                font-size: 1.1em;
+            }
+        }
+        
+    }
+}
+.login {
+    display: none;
+    height: 100%;
+    width: 200px;
+    background: #F4F4F4;
+    position: absolute;
+    @include FlexCenter(center, row);
+    left: -200px;
+    transition: all 1s;
+    z-index: -1; // OGARNAC Z-INDEX
+    overflow: hidden;
+}
+
+.active {
+    left: 150px;
+    z-index: -1;
+}

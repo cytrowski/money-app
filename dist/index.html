@@ -5,14 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Money App</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- navigation -->
-  <nav>
+  <nav class="navbar">
     <ul class="nav">
-      <li class="nav__pick"></li>
-      <li class="nav__pick"></li>
+      <li class="nav__pick">Login</li>
+      <li class="nav__pick">Help</li>
     </ul>
+    <div class="login">
+        <form class="login-form">
+            <div class="input-group">
+              <div class="input-group__info">
+                Log in:
+              </div>
+              <input type="text" id="login" class="form-control" required>
+              <input type="text" id="password" class="form-control" required>
+              <div class="submit">
+                <input type="submit" class="btn" value="Login">
+              </div>
+            </div>
+          </form>
+    </div>
   </nav>
   <!-- budget % -->
   <div class="budget">

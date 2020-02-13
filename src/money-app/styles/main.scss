@@ -1,5 +1,8 @@
 body {
     background: #E5E5E5;
+    // position: relative;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
 }
 
 $table-head-color: #100DAE;
@@ -13,6 +16,25 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     align-items: center;
     flex-direction: $direction;
 }
+.budget .container {
+    z-index: 1;
+}
+.input-group {
+    @include FlexCenter(center, column);
 
+    input {
+        margin-top: 5px;
+        width: 150px;
+    }
+    .btn {
+        background: $main-color;
+        width: 100px;
+        height: 25px;
+        margin-top: 15px;
+        border-radius: 10px;
+        color: $table-first-color;
+        border: none;
+    }
+}
 
 

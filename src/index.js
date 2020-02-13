@@ -1,3 +1,7 @@
 import './money-app/styles/main.css';
+import './money-app/styles/navbar/navbar.css';
+import Navbar from './money-app/navbar';
 
-console.log('test');
+// animate login cart
+const showLogin = new Navbar(document.querySelector('.navbar'));
+showLogin.init();

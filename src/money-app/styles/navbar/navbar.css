@@ -1,0 +1,96 @@
+nav {
+  height: 100%;
+  width: 150px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2DB626), to(#AEDC49));
+  background: linear-gradient(#2DB626, #AEDC49);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 0;
+  padding: 0;
+  -webkit-box-shadow: 5px 2px 15px #b9b9b9;
+          box-shadow: 5px 2px 15px #b9b9b9;
+}
+
+nav .nav {
+  list-style: none;
+  margin-left: -40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+}
+
+nav .nav__pick {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+nav .nav__pick:hover {
+  background: rgba(0, 0, 0, 0.157);
+  letter-spacing: 0.08em;
+  font-size: 1.1em;
+}
+
+.login {
+  display: none;
+  height: 100%;
+  width: 200px;
+  background: #F4F4F4;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  left: -200px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.active {
+  left: 150px;
+  z-index: -1;
+}
+/*# sourceMappingURL=navbar.css.map */
