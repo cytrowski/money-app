@@ -12,17 +12,16 @@ $box-shadow: rgb(185, 185, 185);
 }
 
 nav {
-    height: 100%;
-    width: 150px;
-    background: $main-color;
-    position: absolute;
+
+    position: fixed;
+    z-index: 2;
     left: 0;
     top:0;
     @include FlexCenter(center, row);
     margin: 0;
     padding: 0;
     box-shadow: 5px 2px 15px $box-shadow;
-
+    height: 100%;
     
     .nav {
         list-style: none;
@@ -31,7 +30,9 @@ nav {
         height: 100%;
         width: 100%;
         z-index: 5;
-
+        height: 100%;
+        width: 150px;
+        background: $main-color;
         
         &__pick {   
             padding-top: 10px;
@@ -51,7 +52,7 @@ nav {
         
     }
 }
-.login {
+.slide_menu {
     display: none;
     height: 100%;
     width: 200px;
@@ -60,11 +61,11 @@ nav {
     @include FlexCenter(center, row);
     left: -200px;
     transition: all 1s;
-    z-index: -1; // OGARNAC Z-INDEX
+    z-index: 1; // OGARNAC Z-INDEX
     overflow: hidden;
 }
 
 .active {
     left: 150px;
-    z-index: -1;
+    z-index: 1;
 }

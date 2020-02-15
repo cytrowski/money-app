@@ -1,9 +1,6 @@
 nav {
-  height: 100%;
-  width: 150px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#2DB626), to(#AEDC49));
-  background: linear-gradient(#2DB626, #AEDC49);
-  position: absolute;
+  position: fixed;
+  z-index: 2;
   left: 0;
   top: 0;
   display: -webkit-box;
@@ -23,6 +20,7 @@ nav {
   padding: 0;
   -webkit-box-shadow: 5px 2px 15px #b9b9b9;
           box-shadow: 5px 2px 15px #b9b9b9;
+  height: 100%;
 }
 
 nav .nav {
@@ -44,6 +42,10 @@ nav .nav {
   height: 100%;
   width: 100%;
   z-index: 5;
+  height: 100%;
+  width: 150px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2DB626), to(#AEDC49));
+  background: linear-gradient(#2DB626, #AEDC49);
 }
 
 nav .nav__pick {
@@ -63,7 +65,7 @@ nav .nav__pick:hover {
   font-size: 1.1em;
 }
 
-.login {
+.slide_menu {
   display: none;
   height: 100%;
   width: 200px;
@@ -85,12 +87,12 @@ nav .nav__pick:hover {
   left: -200px;
   -webkit-transition: all 1s;
   transition: all 1s;
-  z-index: -1;
+  z-index: 1;
   overflow: hidden;
 }
 
 .active {
   left: 150px;
-  z-index: -1;
+  z-index: 1;
 }
 /*# sourceMappingURL=navbar.css.map */
