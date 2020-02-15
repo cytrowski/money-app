@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAYA,AAAA,QAAQ,CAAC;EACL,UAAU,EAZM,IAAI;EAapB,SAAS,EAAE,KAAK;EAChB,MAAM,EAAE,KAAK;EATb,OAAO,EAAE,IAAI;EACb,eAAe,EASK,MAAM;EAR1B,WAAW,EAAE,MAAM;EACnB,cAAc,EAOc,GAAG,CAAC,UAAU;EAC1C,UAAU,EAAE,IAAI;CAEnB",
+    "sources": [
+        "expense.scss"
+    ],
+    "names": [],
+    "file": "expense.css"
+}

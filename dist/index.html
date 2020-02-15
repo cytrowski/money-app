@@ -12,6 +12,7 @@
   <nav class="navbar">
     <ul class="nav">
       <li class="nav__pick" data-target="#login">Login</li>
+      <li class="nav__pick" data-target="#budget">Budget</li>
       <li class="nav__pick" data-target="#help">Help</li>
     </ul>
     <div class="slide_menu" id="login">
@@ -20,7 +21,7 @@
               <div class="input-group__info">
                 Log in:
               </div>
-              <input type="text" id="login" class="form-control" required>
+              <input type="text" id="login_name" class="form-control" required>
               <input type="text" id="password" class="form-control" required>
               <div class="submit">
                 <input type="submit" class="btn" value="Login">
@@ -29,16 +30,19 @@
           </form>
     </div>
     <div class="slide_menu" id="help">HELP</div>
+    <div class="slide_menu" id="budget">BUDGET</div>
   </nav>
   <!-- budget % -->
-  <div class="budget">
-    <div class="budget__text">Wykorzystano budzet: </div>
-    <div class="budget__circle"></div>
-  </div>
+
+<div class="main-container">
+    <div class="budget">
+      <div class="budget__text">Wykorzystano budzet: </div>
+      <div class="budget__circle"></div>
+    </div>
   <div class="container">
-  <div class="expense-stats">
-  <!-- form -->
-  <form class="expense">
+    <div class="expense-stats">
+    <!-- form -->
+      <form class="expense">
     <div class="input-group">
       <div class="input-group__info">
         Dodaj wydatek:
@@ -49,10 +53,10 @@
         <input type="submit" class="btn" value="Dodaj">
       </div>
     </div>
-  </form>
-  <!-- data from form -->
-  <div class="table">
-    <table>
+      </form>
+      <!-- data from form -->
+    <div class="table">
+    <table class="table-content">
       <thead>
         <tr>
           <th>Data</th>
@@ -62,16 +66,27 @@
       </thead>
       <tbody>
           <tr>
-              <th>01.01.2020</th>
-              <th>Pierogi testowe</th>
-              <th>22,90</th>
+              <td>01.01.2020</td>
+              <td>Pierogi testowe</td>
+              <td>22,90</td>
+            </tr>
+            <tr>
+              <td>01.01.2020</td>
+              <td>Pierogi testowe</td>
+              <td>22,90</td>
+            </tr>
+            <tr>
+              <td>01.01.2020</td>
+              <td>Pierogi testowe</td>
+              <td>22,90</td>
             </tr>
       </tbody>
     </table>
   </div>
 </div>
+</div>
 <!-- stats from all data -->
-<div class="stats"></div>
+<div class="stats">Tekst</div>
 </div>
   <script src="assets/bundle.js"></script>
 </body>

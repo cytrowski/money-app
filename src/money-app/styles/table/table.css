@@ -1,0 +1,32 @@
+.table-content {
+  min-width: 450px;
+  background: #fff;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table-content thead tr {
+  background-color: #100DAE;
+  text-align: left;
+  color: #fff;
+  width: 100%;
+  font-weight: bold;
+}
+
+.table-content th,
+.table-content td {
+  padding: 12px 15px;
+}
+
+.table-content tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.table-content tbody tr:nth-of-type(even) {
+  background-color: #F4F4F4;
+}
+
+.table-content tbody tr:last-of-type {
+  border-bottom: 2px solid #100DAE;
+}
+/*# sourceMappingURL=table.css.map */

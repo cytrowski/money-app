@@ -1,0 +1,47 @@
+$table-head-color: #100DAE;
+$table-first-color: #fff;
+$table-second-color: #F4F4F4;
+$main-color: linear-gradient(#2DB626, #AEDC49);
+
+@mixin FlexCenter($justify, $direction) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+
+.table-content {
+    min-width: 450px;
+    background: $table-first-color;
+    margin-top: 20px;
+    border-collapse: collapse;
+      
+}
+
+
+.table-content thead tr {
+    background-color: $table-head-color;
+    text-align: left;
+    color: $table-first-color;
+    width: 100%;
+    font-weight: bold;
+}
+
+.table-content th,
+.table-content td {
+  padding: 12px 15px;
+}
+
+.table-content tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-content tbody tr:nth-of-type(even) { // zmienia co drugi kolor
+    background-color: $table-second-color;
+}
+  
+  .table-content tbody tr:last-of-type {
+    border-bottom: 2px solid $table-head-color;
+}
+  

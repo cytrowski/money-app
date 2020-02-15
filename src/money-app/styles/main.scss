@@ -3,6 +3,7 @@ body {
     // position: relative;
     margin: 0;
     font-family: 'Lato', sans-serif;
+    margin-left: 170px;
 }
 
 $table-head-color: #100DAE;
@@ -16,9 +17,7 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     align-items: center;
     flex-direction: $direction;
 }
-.budget .container {
-    z-index: 1;
-}
+
 .input-group {
     @include FlexCenter(center, column);
 
@@ -36,5 +35,20 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
         border: none;
     }
 }
-
-
+.main-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0px 20px;
+}
+.budget {
+    grid-column: 1 / span 3;
+}
+.container {
+    grid-column: 1;
+}
+.stats {
+    grid-column: 2 / span 3;
+}
+.table {
+    grid-column: 1 / span 3;
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAYA,AAAA,MAAM,CAAC;EACH,YAAY,EAAE,IAAI;EAClB,SAAS,EAAE,KAAK;EAChB,UAAU,EAdM,IAAI;EAepB,MAAM,EAAE,KAAK;EACb,UAAU,EAAE,IAAI;CACnB",
+    "sources": [
+        "stats.scss"
+    ],
+    "names": [],
+    "file": "stats.css"
+}
