@@ -34,11 +34,11 @@
         <form class="login-form">
             <div class="input-group">
               <div class="input-group__info">
-                Wpisz budzet:
+                Add/Update budget:
               </div>
               <input type="text" id="budget_value" class="form-control" required>
               <div class="submit">
-                <input type="submit" class="btn" value="Dodaj">
+                <input type="submit" class="btn" value="Add">
               </div>
             </div>
           </form>
@@ -48,7 +48,7 @@
 
 <div class="main-container">
     <div class="budget">
-      <div class="budget__text">Wykorzystano budzet: </div>
+      <div class="budget__text">Budget used: </div>
       <div class="budget__circle"></div>
     </div>
   <div class="container">
@@ -57,12 +57,12 @@
       <form class="expense">
     <div class="input-group">
       <div class="input-group__info">
-        Dodaj wydatek:
+        Add expense:
       </div>
-      <input type="text" id="product-name" class="form-control" required>
-      <input type="text" id="price" class="form-control" required>
+      <input type="text" id="product-name" class="form-control" value="Name" required>
+      <input type="text" id="price" class="form-control" value="Price" required>
       <div class="submit">
-        <input type="submit" class="btn" value="Dodaj">
+        <input type="submit" class="btn" value="Add">
       </div>
     </div>
       </form>
@@ -71,13 +71,13 @@
     <table class="table-content">
       <thead>
         <tr>
-          <th>Data</th>
-          <th>Nazwa</th>
-          <th>Cena</th>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Price</th>
         </tr>
       </thead>
-      <tbody>
-          <tr>
+      <tbody class="table-body">
+          <!-- <tr>
               <td>01.01.2020</td>
               <td>Pierogi testowe</td>
               <td>22,90</td>
@@ -91,7 +91,7 @@
               <td>01.01.2020</td>
               <td>Pierogi testowe</td>
               <td>22,90</td>
-            </tr>
+            </tr> -->
       </tbody>
     </table>
   </div>
@@ -101,6 +101,8 @@
 <div class="stats">Tekst</div>
 </div>
 
+
+  <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>

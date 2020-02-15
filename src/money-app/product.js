@@ -14,6 +14,7 @@ class Product {
     }
     getProducts(callback){ //pobiera liste z firebase
         this.products
+            .orderBy('created_at')
             .onSnapshot(snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if(change.type === 'added'){
