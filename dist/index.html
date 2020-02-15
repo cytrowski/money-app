@@ -30,7 +30,19 @@
           </form>
     </div>
     <div class="slide_menu" id="help">HELP</div>
-    <div class="slide_menu" id="budget">BUDGET</div>
+    <div class="slide_menu" id="budget">
+        <form class="login-form">
+            <div class="input-group">
+              <div class="input-group__info">
+                Wpisz budzet:
+              </div>
+              <input type="text" id="budget_value" class="form-control" required>
+              <div class="submit">
+                <input type="submit" class="btn" value="Dodaj">
+              </div>
+            </div>
+          </form>
+    </div>
   </nav>
   <!-- budget % -->
 
@@ -40,14 +52,14 @@
       <div class="budget__circle"></div>
     </div>
   <div class="container">
-    <div class="expense-stats">
+
     <!-- form -->
       <form class="expense">
     <div class="input-group">
       <div class="input-group__info">
         Dodaj wydatek:
       </div>
-      <input type="text" id="name" class="form-control" required>
+      <input type="text" id="product-name" class="form-control" required>
       <input type="text" id="price" class="form-control" required>
       <div class="submit">
         <input type="submit" class="btn" value="Dodaj">
@@ -83,11 +95,34 @@
       </tbody>
     </table>
   </div>
-</div>
+
 </div>
 <!-- stats from all data -->
 <div class="stats">Tekst</div>
 </div>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDcVWlkm_RhSTO7HOEBFMrLwYz7GTvRqBQ",
+      authDomain: "money-app-da27c.firebaseapp.com",
+      databaseURL: "https://money-app-da27c.firebaseio.com",
+      projectId: "money-app-da27c",
+      storageBucket: "money-app-da27c.appspot.com",
+      messagingSenderId: "324784059431",
+      appId: "1:324784059431:web:de3fab2c0c393cf92a0a02"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
   <script src="assets/bundle.js"></script>
 </body>
 </html>

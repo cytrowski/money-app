@@ -1,8 +1,12 @@
 .table-content {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table {
   min-width: 450px;
   background: #fff;
   margin-top: 20px;
-  border-collapse: collapse;
 }
 
 .table-content thead tr {

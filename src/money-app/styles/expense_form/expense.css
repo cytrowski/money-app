@@ -16,5 +16,18 @@
       -ms-flex-direction: row !important;
           flex-direction: row !important;
   margin-top: 20px;
+  font-size: 24px;
+}
+
+.expense .form-control {
+  width: 300px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.expense .btn {
+  width: 140px;
+  height: 33px;
+  font-size: 14px;
 }
 /*# sourceMappingURL=expense.css.map */

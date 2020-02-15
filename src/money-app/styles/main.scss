@@ -3,7 +3,7 @@ body {
     // position: relative;
     margin: 0;
     font-family: 'Lato', sans-serif;
-    margin-left: 170px;
+    margin-left: 120px;
 }
 
 $table-head-color: #100DAE;
@@ -49,6 +49,4 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
 .stats {
     grid-column: 2 / span 3;
 }
-.table {
-    grid-column: 1 / span 3;
-}
+

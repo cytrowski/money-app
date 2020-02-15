@@ -12,13 +12,15 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
 
 
 .table-content {
+    border-collapse: collapse; 
+    width: 100%;
+}
+.table {
     min-width: 450px;
     background: $table-first-color;
     margin-top: 20px;
-    border-collapse: collapse;
-      
+    
 }
-
 
 .table-content thead tr {
     background-color: $table-head-color;
