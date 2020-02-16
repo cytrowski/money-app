@@ -15,6 +15,7 @@ const expenseForm = document.querySelector('.expense');
 const budgetForm = document.querySelector('.budget-form');
 const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
+const budgetCircle = document.querySelector('.budget__circle');
 
 // animate login cart
 const showLogin = new Navbar(document.querySelector('.navbar'));
@@ -77,13 +78,13 @@ products.getProducts(data => {
 // sum prices and output this to DOM
 
 products.sumPrices().then(value => {
-const val = Math.round(value * 100) / 100;
-const sumAll = budget - val;
+const outcome = Math.round(value * 100) / 100;
+const sumAll = budget - outcome;
     stats.innerHTML += `
-    <div><span class="budget-name">Budget: </span>  ${budget}$</div>
-    <div><span class="budget-name">Outcome: </span> ${val}$</div>
-    <div><span class="budget-name">All: </span> ${sumAll}$</div>
-
+    <div><span class="budget-name">Budget: </span>  <span class="stat-value">${budget}$</span></div>
+    <div><span class="budget-name">Outcome: </span> <span class="stat-value outcome-value">${outcome}$</span></div>
+    <div><span class="budget-name">All: </span> <span class="stat-value last-value">${sumAll}$</span></div>
     `;
-    
+    const circle = Math.round(((outcome * 100) / budget) * 100) / 100;
+    budgetCircle.innerHTML += `${circle}%`
 });

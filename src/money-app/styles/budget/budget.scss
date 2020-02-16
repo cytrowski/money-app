@@ -15,6 +15,10 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     min-width: 920px;
     height: 300px;
     margin-top: 20px;
-    @include FlexCenter(center, row);
+    @include FlexCenter(space-around, row);
     font-size: 36px;
+
+    &__circle {
+        font-size: 72px;
+    }
 }
