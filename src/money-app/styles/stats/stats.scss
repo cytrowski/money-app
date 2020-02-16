@@ -16,4 +16,12 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     background: $table-first-color;
     height: 300px;
     margin-top: 20px;
+    @include FlexCenter(center, column);
+    font-size: 24px;
+}
+.budget-name {
+    font-weight: bolder;
+    display: inline-block;
+    margin-right: 200px;
+    text-align: left;
 }

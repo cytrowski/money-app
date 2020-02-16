@@ -31,7 +31,19 @@ class Product {
         this.budget = budget;
         localStorage.setItem('budget', budget);
     }
-}
+    async sumPrices(){
+        return this.products.get().then(snapshot => {
+            let totalCount = 0;
+            
+            snapshot.forEach(doc => {
+            totalCount += doc.data().price;
+            });
+            const a = totalCount;
+            return a;
+
+        }).catch(err => console.log(err));
+    };
+};
 
 
 
