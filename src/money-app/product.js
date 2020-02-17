@@ -34,7 +34,6 @@ class Product {
     async sumPrices(){
         return this.products.get().then(snapshot => {
             let totalCount = 0;
-            
             snapshot.forEach(doc => {
             totalCount += doc.data().price;
             });

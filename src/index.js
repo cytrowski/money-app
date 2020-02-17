@@ -26,8 +26,8 @@ showLogin.init();
 expenseForm.addEventListener('submit', e => {
     e.preventDefault();
     const name = expenseForm.productName.value.trim();
-    const price = expenseForm.price.value.trim();
-    console.log(name, price);
+    const price = Number(expenseForm.price.value.trim());
+    console.log(`Product added: ${name}, ${price}`);
 
     products.addProduct(name, price)
         .then(() => expenseForm.reset())
