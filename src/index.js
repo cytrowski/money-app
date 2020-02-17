@@ -79,7 +79,7 @@ products.getProducts(data => {
 
 products.sumPrices().then(value => {
 const outcome = Math.round(value * 100) / 100;
-const sumAll = budget - outcome;
+const sumAll = Math.round((budget - outcome) * 100) / 100;
     stats.innerHTML += `
     <div><span class="budget-name">Budget: </span>  <span class="stat-value">${budget}$</span></div>
     <div><span class="budget-name">Outcome: </span> <span class="stat-value outcome-value">${outcome}$</span></div>
