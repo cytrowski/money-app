@@ -21,18 +21,22 @@ const budgetCircle = document.querySelector('.budget__circle');
 const showLogin = new Navbar(document.querySelector('.navbar'));
 showLogin.init();
 
+
 //add new products to firebase
 expenseForm.addEventListener('submit', e => {
     e.preventDefault();
     const name = expenseForm.productName.value.trim();
     const price = expenseForm.price.value.trim();
-    
+    console.log(name, price);
+
     products.addProduct(name, price)
         .then(() => expenseForm.reset())
         .catch(err => console.log(err));
 });
 
-// add / update budget
+
+
+// add / update budget ----------------------------------------
 budgetForm.addEventListener('submit', e => {
     e.preventDefault();
     //update budget 
@@ -53,24 +57,14 @@ const budget = localStorage.budget ? localStorage.budget : 0;
 // ------------------------------------------------------------
 
 
-
-
-//update stats 
-// stats.innerHTML += `
-// <span class="budget-name">Budget: </span>  ${budget}$
-// <span class="budget-name">Outcome: </span> ${}$
-// `;
-
 //class instances
-const products = new Product('pierogi', '22,39', budget);
+const products = new Product('pierogi', '22,39');
 const productUI = new ProductUI(table);
 
 
 //get the products and render
 products.getProducts(data => {
     productUI.render(data)
-    // console.log(products.sumPrices());
-
 });
 
 

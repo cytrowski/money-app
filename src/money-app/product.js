@@ -8,8 +8,8 @@ class Product {
     async addProduct(name, price) { //dodaje produkt do firebase
         const now = new Date();
         const product = {
-            name: this.name,
-            price: this.price,
+            name: name,
+            price: price,
             created_at: firebase.firestore.Timestamp.fromDate(now),
         };
         const response = await this.products.add(product);
