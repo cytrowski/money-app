@@ -7,6 +7,9 @@ import './money-app/styles/stats/stats.css';
 import Navbar from './money-app/navbar';
 import Product from './money-app/product';
 import ProductUI from './money-app/productUI';
+import Stats from './money-app/statsUI';
+
+
 
 
 //query selectors
@@ -16,6 +19,8 @@ const budgetForm = document.querySelector('.budget-form');
 const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
+
+
 
 // animate login cart
 const showLogin = new Navbar(document.querySelector('.navbar'));
@@ -60,7 +65,7 @@ const budget = localStorage.budget ? localStorage.budget : 0;
 //class instances
 const products = new Product('pierogi', '22,39');
 const productUI = new ProductUI(table);
-
+const sumStats = new Stats(stats, budgetCircle, budget);
 
 //get the products and render
 products.getProducts(data => {
@@ -69,16 +74,10 @@ products.getProducts(data => {
 
 
 
-// sum prices and output this to DOM
+// sum prices and output statistics to DOM
 
 products.sumPrices().then(value => {
-const outcome = Math.round(value * 100) / 100;
-const sumAll = Math.round((budget - outcome) * 100) / 100;
-    stats.innerHTML += `
-    <div><span class="budget-name">Budget: </span>  <span class="stat-value">${budget}$</span></div>
-    <div><span class="budget-name">Outcome: </span> <span class="stat-value outcome-value">${outcome}$</span></div>
-    <div><span class="budget-name">All: </span> <span class="stat-value last-value">${sumAll}$</span></div>
-    `;
-    const circle = Math.round(((outcome * 100) / budget) * 100) / 100;
-    budgetCircle.innerHTML += `${circle}%`
+
+    sumStats.addStatsUI(value);
+
 });

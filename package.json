@@ -26,7 +26,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@babel/runtime": "^7.8.4"
+    "@babel/runtime": "^7.8.4",
+    "@material/form-field": "^5.0.0",
+    "@material/textfield": "^5.0.0"
   },
   "browserslist": [
     "Chrome 78"
