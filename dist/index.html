@@ -13,24 +13,44 @@
   <nav class="navbar">
     <ul class="nav">
       <li class="nav__pick" data-target="#login">Login</li>
+      <li class="nav__pick" data-target="#signup">Sign Up</li>
       <li class="nav__pick" data-target="#budget">Budget</li>
+      <li class="nav__logout" id="logout">Logout</li>
       <li class="nav__pick" data-target="#help">Help</li>
     </ul>
+    <!--LOGIN -->
     <div class="slide_menu" id="login">
         <form class="login-form">
             <div class="input-group">
               <div class="input-group__info">
                 Log in:
               </div>
-              <input type="text" id="login_name" class="form-control" value="Login" required>
-              <input type="text" id="password" class="form-control" value="Password" required>
+              <input type="email" id="login_name" class="form-control" value="Email" required>
+              <input type="password" id="password" class="form-control" value="" required>
               <div class="submit">
                 <input type="submit" class="btn" value="Login">
               </div>
             </div>
           </form>
     </div>
-    <div class="slide_menu" id="help">HELP</div>
+    <!-- SIGN UP -->
+    <div class="slide_menu" id="signup">
+      <form class="signup-form">
+          <div class="input-group">
+            <div class="input-group__info">
+              Sign Up:
+            </div>
+            <input type="email" id="signup-login" class="form-control" value="Email" required>
+            <input type="password" id="signup-password" class="form-control" value="" required>
+            <div class="submit">
+              <input type="submit" class="btn" value="Sign Up">
+            </div>
+          </div>
+        </form>
+  </div>
+  <div class="slide_menu" id="help">HELP</div>
+
+    <!-- ADD BUDGET -->
     <div class="slide_menu" id="budget">
         <form class="budget-form">
             <div class="input-group">
@@ -107,6 +127,9 @@
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-functions.js"></script>
+
   <!-- TODO: Add SDKs for Firebase products that you want to use
       https://firebase.google.com/docs/web/setup#available-libraries -->
 
@@ -124,6 +147,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const auth = firebase.auth();
+    const functions = firebase.functions();
+
   </script>
 
   <script src="assets/bundle.js"></script>

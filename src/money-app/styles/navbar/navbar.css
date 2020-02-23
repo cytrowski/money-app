@@ -65,6 +65,23 @@ nav .nav__pick:hover {
   font-size: 1.1em;
 }
 
+nav .nav__logout {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+nav .nav__logout:hover {
+  background: rgba(0, 0, 0, 0.157);
+  letter-spacing: 0.08em;
+  font-size: 1.1em;
+}
+
 .slide_menu {
   display: none;
   height: 100%;

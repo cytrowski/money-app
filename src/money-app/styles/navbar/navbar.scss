@@ -49,6 +49,21 @@ nav {
                 font-size: 1.1em;
             }
         }
+        &__logout {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            transition: all 0.25s;
+            width: 100%;
+            color: $table-first-color;
+            cursor: pointer;
+            text-align: center;
+            
+            &:hover {
+                background: rgba(0, 0, 0, 0.157);
+                letter-spacing: 0.08em;
+                font-size: 1.1em;
+            }
+        }
         
     }
 }

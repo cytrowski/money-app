@@ -20,6 +20,52 @@ const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
 
+// ------------- AUTH FUNCTIONS -----------------------------
+
+// signup user
+const signupForm = document.querySelector('.signup-form');
+
+signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const email = signupForm['signup-login'].value;
+    const password = signupForm['signup-password'].value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((data) => {
+            console.log(data.user);
+            signupForm.reset();
+            signupForm.parentElement.classList.remove('active');
+        })
+})
+
+// logout
+const logout = document.querySelector('#logout');
+logout.addEventListener('click', e => {
+    e.preventDefault();
+    auth.signOut()
+        .then(() => {
+            console.log('user logout');
+        })
+})
+
+//login 
+const loginForm = document.querySelector('.login-form');
+
+loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+    //get user info
+    const email = loginForm['login_name'].value;
+    const password = loginForm['password'].value;
+
+    auth.signInWithEmailAndPassword(email, password)
+        .then(data => {
+            console.log(data);
+            loginForm.reset();
+            loginForm.parentElement.classList.remove('active');
+        })
+})
+
 
 
 // animate login cart
