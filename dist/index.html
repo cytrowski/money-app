@@ -12,11 +12,11 @@
   <!-- navigation -->
   <nav class="navbar">
     <ul class="nav">
-      <li class="nav__pick" data-target="#login">Login</li>
-      <li class="nav__pick" data-target="#signup">Sign Up</li>
-      <li class="nav__pick" data-target="#budget">Budget</li>
-      <li class="nav__logout" id="logout">Logout</li>
-      <li class="nav__pick" data-target="#help">Help</li>
+      <li class="nav__pick logged-out" data-target="#login">Login</li>
+      <li class="nav__pick logged-out" data-target="#signup">Sign Up</li>
+      <li class="nav__pick logged-in" data-target="#budget">Budget</li>
+      <li class="nav__logout logged-in" id="logout">Logout</li>
+      <li class="nav__pick logged-in" data-target="#help">Help</li>
     </ul>
     <!--LOGIN -->
     <div class="slide_menu" id="login">
@@ -121,6 +121,7 @@
 <!-- stats from all data -->
 <div class="stats"></div>
 </div>
+<div class="logout-msg">If you want see your data, log in!</div>
 <div class="update-msg"></div>
 
   <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>

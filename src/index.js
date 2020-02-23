@@ -1,3 +1,4 @@
+import './money-app/auth.js';
 import './money-app/styles/main.css';
 import './money-app/styles/navbar/navbar.css';
 import './money-app/styles/budget/budget.css';
@@ -21,50 +22,45 @@ const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
 
 // ------------- AUTH FUNCTIONS -----------------------------
+// zostawic - moze sie przyda ten space
 
-// signup user
-const signupForm = document.querySelector('.signup-form');
+// setup UI login/logout
+const loggedInLinks = document.querySelectorAll('.logged-in');
+const loggedOutLinks = document.querySelectorAll('.logged-out');
+const userData = document.querySelector('.main-container');
+const logoutMsg = document.querySelector('.logout-msg');
 
-signupForm.addEventListener('submit', e => {
-    e.preventDefault();
+const authUI = user => {
+if (user){
+    //toggle nav UI elements
+    loggedInLinks.forEach(item => item.style.display = 'block');
+    loggedOutLinks.forEach(item => item.style.display = 'none');
+    logoutMsg.style.display = 'none';
+    userData.style.display = 'grid';
+} else {
+    //toggle nav UI elements
+    loggedInLinks.forEach(item => item.style.display = 'none');
+    loggedOutLinks.forEach(item => item.style.display = 'block');
+    logoutMsg.style.display = 'block';
+    userData.style.display = 'none';
+}
+}
 
-    const email = signupForm['signup-login'].value;
-    const password = signupForm['signup-password'].value;
 
-    auth.createUserWithEmailAndPassword(email, password)
-        .then((data) => {
-            console.log(data.user);
-            signupForm.reset();
-            signupForm.parentElement.classList.remove('active');
-        })
-})
+//listen for auth status changes
+auth.onAuthStateChanged(user => {
+    if (user){
+        console.log('user logged in:', user); // test
+        authUI(user);
+        } else {
+            console.log('user logged out');
+            authUI('');
+        }
+});
 
-// logout
-const logout = document.querySelector('#logout');
-logout.addEventListener('click', e => {
-    e.preventDefault();
-    auth.signOut()
-        .then(() => {
-            console.log('user logout');
-        })
-})
 
-//login 
-const loginForm = document.querySelector('.login-form');
 
-loginForm.addEventListener('submit', e => {
-    e.preventDefault();
-    //get user info
-    const email = loginForm['login_name'].value;
-    const password = loginForm['password'].value;
 
-    auth.signInWithEmailAndPassword(email, password)
-        .then(data => {
-            console.log(data);
-            loginForm.reset();
-            loginForm.parentElement.classList.remove('active');
-        })
-})
 
 
 

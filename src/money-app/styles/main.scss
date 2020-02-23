@@ -6,6 +6,7 @@ body {
     margin: 0;
     font-family: 'Lato', sans-serif;
     margin-left: 120px;
+    text-align: center
 }
 
 $table-head-color: #100DAE;
@@ -52,12 +53,25 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     grid-column: 2 / span 3;
 }
 
+.logout-msg {
+    // background: $table-first-color;
+    font-size: 72px;
+    text-align: center;
+    display: inline-block;
+    @include FlexCenter(center, column);
+    // position: absolute;
+    // left: 500px;
+
+    width: 100%;
+    padding-top: 200px;
+    height: 100vh;
+}
 // msg when you update budget
 .update-msg {
     width: 200px;
     height: 100px;
     position: absolute;
-    left: 500px;
+    left: 700px;
     top: -200px;
     background: $main-color;
     color: white;

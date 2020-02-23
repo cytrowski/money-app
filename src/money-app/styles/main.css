@@ -3,6 +3,7 @@ body {
   margin: 0;
   font-family: 'Lato', sans-serif;
   margin-left: 120px;
+  text-align: center;
 }
 
 .input-group {
@@ -62,11 +63,33 @@ body {
   grid-column: 2 / span 3;
 }
 
+.logout-msg {
+  font-size: 72px;
+  text-align: center;
+  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  padding-top: 200px;
+  height: 100vh;
+}
+
 .update-msg {
   width: 200px;
   height: 100px;
   position: absolute;
-  left: 500px;
+  left: 700px;
   top: -200px;
   background: -webkit-gradient(linear, left top, left bottom, from(#2DB626), to(#AEDC49));
   background: linear-gradient(#2DB626, #AEDC49);
