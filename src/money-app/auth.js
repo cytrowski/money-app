@@ -16,11 +16,15 @@ signupForm.addEventListener('submit', e => {
     const password = signupForm['signup-password'].value;
 
     auth.createUserWithEmailAndPassword(email, password)
-        .then((data) => {
-            console.log(data.user);
+        .then(data => {
+            return db.collection('users').doc(data.user.uid).set({
+                budget: signupForm['signup-budget'].value
+            });
+        })
+        .then(() => {
             signupForm.reset();
             signupForm.parentElement.classList.remove('active');
-        })
+        });
 })
 
 // logout

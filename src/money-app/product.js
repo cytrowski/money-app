@@ -1,22 +1,23 @@
 class Product {
-    constructor(name, price, budget) {
-        this.products = db.collection('money-app');
+    constructor(name, price, budget, user) {
+        this.products = db.collection('users');
         this.budget = budget;
         this.name = name;
         this.price = price;
+        this.user = user;
     } 
-    async addProduct(name, price) { //dodaje produkt do firebase
+    async addProduct(name, price, user) { //dodaje produkt do firebase
         const now = new Date();
         const product = {
             name: name,
             price: price,
             created_at: firebase.firestore.Timestamp.fromDate(now),
         };
-        const response = await this.products.add(product);
+        const response = await this.products.doc(user).collection('products').add(product);
         return response;
     }
-    getProducts(callback){ //pobiera liste z firebase
-        this.products
+    getProducts(callback, user){ //pobiera liste z firebase
+        this.products.doc(user).collection('products')
             .orderBy("created_at", "desc")
             .onSnapshot(snapshot => {
                 snapshot.docChanges().forEach(change => {
@@ -31,8 +32,8 @@ class Product {
         this.budget = budget;
         localStorage.setItem('budget', budget);
     }
-    async sumPrices(){
-        return this.products.get().then(snapshot => {
+    async sumPrices(user){
+        return this.products.doc(user).collection('products').get().then(snapshot => {
             let totalCount = 0;
             snapshot.forEach(doc => {
             totalCount += doc.data().price;
