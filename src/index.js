@@ -55,19 +55,41 @@ auth.onAuthStateChanged(user => {
         authUI(user);
         //get the products and render
         products.getProducts((data => {
-            // console.log(data);
+        // console.log(data);
             productUI.render(data);
         }), user.uid);
         // sum prices and output statistics to DOM
         products.sumPrices(user.uid).then(value => {
-            sumStats.addStatsUI(value);
+            sumStats.addStatsUI(value, user.uid);
         });
+
+        budgetForm.addEventListener('submit', e => {
+            e.preventDefault();
+            //update budget 
+            const budget = budgetForm.budget_value.value.trim();
+            products.updateBudget(budget, user.uid);
+            //reset form
+            budgetForm.reset();
+            const budgetCart = document.querySelector('#budget');
+            budgetCart.classList.remove('active');
+        
+            // show message
+            updateMssg.innerText = `Your budget was updated to ${budget}$`;
+            updateMssg.classList.add('act');
+            setTimeout(() => {
+                updateMssg.innerText = '';
+                updateMssg.classList.remove('act');
+        
+            }, 3000);
+        })
+        
         } else {
             console.log('user logged out');
             authUI('');
+            productUI.render('');
+            sumStats.addStatsUI('');
         }
 });
-
 
 
 
@@ -96,25 +118,7 @@ expenseForm.addEventListener('submit', e => {
 
 
 // add / update budget ----------------------------------------
-budgetForm.addEventListener('submit', e => {
-    e.preventDefault();
-    //update budget 
-    const budget = budgetForm.budget_value.value.trim();
-    products.updateBudget(budget);
-    //reset form
-    budgetForm.reset();
-    const budgetCart = document.querySelector('#budget');
-    budgetCart.classList.remove('active');
 
-    // show message
-    updateMssg.innerText = `Your budget was updated to ${budget}$`;
-    updateMssg.classList.add('act');
-    setTimeout(() => {
-        updateMssg.innerText = '';
-        updateMssg.classList.remove('act');
-
-    }, 3000);
-})
 // check budget in local storage
 const budget = localStorage.budget ? localStorage.budget : 0;
 // ------------------------------------------------------------

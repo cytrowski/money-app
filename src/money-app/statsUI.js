@@ -4,7 +4,8 @@ class Stats {
         this.circle = circle;
         this.budget = budget;
     }
-    addStatsUI(data){
+    addStatsUI(data, user){
+        if(data) {
         const outcome = Math.round(data * 100) / 100;
         const sumAll = Math.round((this.budget - outcome) * 100) / 100;
         this.stats.innerHTML += `
@@ -14,7 +15,11 @@ class Stats {
         `;
         const circle = Math.round(((outcome * 100) / this.budget) * 100) / 100;
         this.circle.innerHTML += `${circle}%`;
-    }
+
+        } else {
+        this.stats.innerHTML = '';
+        this.circle.innerHTML = '';
+    }}
 }
 
 export { Stats as default };

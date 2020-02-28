@@ -28,9 +28,10 @@ class Product {
                 });
         });
     }
-    updateBudget(budget){
+    updateBudget(budget, user){
         this.budget = budget;
         localStorage.setItem('budget', budget);
+        db.collection('users').doc(user).update({budget: budget});
     }
     async sumPrices(user){
         return this.products.doc(user).collection('products').get().then(snapshot => {

@@ -3,6 +3,7 @@ class ProductUI {
         this.list = list;
     }
     render(data){
+        if(data){
         const when = dateFns.format(data.created_at.toDate(), 'DD.MM.YYYY')
         const html = `
         <tr>
@@ -13,7 +14,9 @@ class ProductUI {
         `
 
         this.list.innerHTML += html;
-    }
+    } else {
+        this.list.innerHTML = '';
+    }}
 }
 
 export { ProductUI as default };
