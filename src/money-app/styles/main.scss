@@ -84,3 +84,19 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
 .act {
     top: 0px;
 }
+#acc {
+    @include FlexCenter(center, column);
+}
+.accInfo {
+    @include FlexCenter(center, column);
+    
+    &__user {
+        width: 50%;
+        margin-bottom: 20px;
+        
+    }
+    .info {
+        font-weight: bolder;
+        font-size: 18px;
+    }
+}

@@ -30,8 +30,9 @@ class Product {
     }
     updateBudget(budget, user){
         this.budget = budget;
-        localStorage.setItem('budget', budget);
+        localStorage.setItem('budget', budget); // zostawić?
         db.collection('users').doc(user).update({budget: budget});
+
     }
     async sumPrices(user){
         return this.products.doc(user).collection('products').get().then(snapshot => {

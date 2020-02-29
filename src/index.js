@@ -20,6 +20,7 @@ const budgetForm = document.querySelector('.budget-form');
 const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
+const account = document.querySelector('#acc');
 
 
 // ------------- AUTH FUNCTIONS -----------------------------
@@ -59,14 +60,34 @@ auth.onAuthStateChanged(user => {
             productUI.render(data);
         }), user.uid);
         // sum prices and output statistics to DOM
-        products.sumPrices(user.uid).then(value => {
-            sumStats.addStatsUI(value, user.uid);
+        products.sumPrices(user.uid).then(value1 => {
+            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+                console.log(snapshot);
+                
+
+                sumStats.addStatsUI(value1, snapshot.data().budget);
+                
+                    // sumStats.addStatsUI('');
+                
+            
+            })
+            
+        });
+
+    // account info
+        db.collection('users').doc(user.uid).get().then(doc => {
+        const html = `
+            <div class="accInfo">
+            <div class="accInfo__email">Logged in as <span class="info">${user.email}</span></div>
+            <div class="accInfo__budget">Your budget: <span class="info">${doc.data().budget}$</span></div></div>
+        `;
+        account.innerHTML += html;
         });
 
         budgetForm.addEventListener('submit', e => {
             e.preventDefault();
             //update budget 
-            const budget = budgetForm.budget_value.value.trim();
+            const budget = parseInt(budgetForm.budget_value.value.trim());
             products.updateBudget(budget, user.uid);
             //reset form
             budgetForm.reset();
@@ -82,7 +103,6 @@ auth.onAuthStateChanged(user => {
         
             }, 3000);
         })
-        
         } else {
             console.log('user logged out');
             authUI('');
@@ -100,8 +120,6 @@ auth.onAuthStateChanged(user => {
 const showLogin = new Navbar(document.querySelector('.navbar'));
 showLogin.init();
 
-// get user uid 
-// const user = firebase.auth().currentUser.uid;
 //add new products to firebase
 expenseForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -118,9 +136,14 @@ expenseForm.addEventListener('submit', e => {
 
 
 // add / update budget ----------------------------------------
+const budget = localStorage.budget ? localStorage.budget : 0;
+
 
 // check budget in local storage
-const budget = localStorage.budget ? localStorage.budget : 0;
+
+
+
+
 // ------------------------------------------------------------
 
 
