@@ -10,6 +10,7 @@ class ProductUI {
         <td>${when}</td>
         <td>${data.name}</td>
         <td>${data.price} $</td>
+        <td><span class="exit-btn">X</span></td>
         </tr>
         `
 

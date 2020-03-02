@@ -31,10 +31,15 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
 }
 
 .table-content th,
-.table-content td {
-  padding: 12px 15px;
+.table-content td:not(:last-child) {
+  padding: 12px 20px;
+  text-align: left;
 }
-
+.table-content th:last-child {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
 .table-content tr {
     border-bottom: 1px solid #dddddd;
 }
@@ -46,4 +51,10 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
   .table-content tbody tr:last-of-type {
     border-bottom: 2px solid $table-head-color;
 }
-  
+.trash-icon {
+    width: 20px;
+    text-align: center;
+    display: inline-block;
+    fill: $table-second-color;
+    
+}
