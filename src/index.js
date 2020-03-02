@@ -21,7 +21,8 @@ const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
 const account = document.querySelector('#acc');
-
+const tableTr = document.querySelectorAll('tr');
+console.log(tableTr);
 
 // ------------- AUTH FUNCTIONS -----------------------------
 // zostawic - moze sie przyda ten space
@@ -54,11 +55,37 @@ auth.onAuthStateChanged(user => {
     if (user){
         console.log('user logged in:', user.uid); // test
         authUI(user);
+
         //get the products and render
-        products.getProducts((data => {
-        // console.log(data);
-            productUI.render(data);
+        products.getProducts(((data, id) => {
+            
+            productUI.render(data, id);
+
         }), user.uid);
+        
+        // delete products
+        table.addEventListener('click', e => {
+            console.log(e);
+            if (e.target.tagName === 'BUTTON'){
+                const id = e.target.parentElement.parentElement.getAttribute('data-id');
+                db.collection('users')
+                    .doc(user.uid)
+                    .collection('products')
+                    .doc(id)
+                    .delete()
+                    .then(() => {
+                        // show message
+                        updateMssg.innerText = `Product was deleted`;
+                        updateMssg.classList.add('act');
+                        setTimeout(() => {
+                            updateMssg.innerText = '';
+                            updateMssg.classList.remove('act');
+                    
+                        }, 3000);
+                })
+            }
+        });
+        
         // sum prices and output statistics to DOM
         products.sumPrices(user.uid).then(value1 => {
             db.collection('users').doc(user.uid).onSnapshot(snapshot => {
@@ -78,8 +105,7 @@ auth.onAuthStateChanged(user => {
         products.addProduct(name, price, user)
             .then(() => expenseForm.reset())
             .catch(err => console.log(err));
-
-                   
+                
 });
 
     // account info
@@ -116,6 +142,7 @@ auth.onAuthStateChanged(user => {
             console.log('user logged out');
             authUI('');
             productUI.render('');
+
             
         }
 });
@@ -137,7 +164,6 @@ showLogin.init();
 const budget = localStorage.budget ? localStorage.budget : 0;
 
 
-// check budget in local storage
 
 
 

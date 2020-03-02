@@ -55,6 +55,8 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
     width: 20px;
     text-align: center;
     display: inline-block;
-    fill: $table-second-color;
     
+}
+.exit-btn {
+    cursor: pointer;
 }

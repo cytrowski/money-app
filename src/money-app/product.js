@@ -23,8 +23,13 @@ class Product {
                 snapshot.docChanges().forEach(change => {
                     if(change.type === 'added'){
                         //udpate UI
-                        callback(change.doc.data());
-                    };
+                        // console.log(change.doc.id);
+                        callback(change.doc.data(), change.doc.id);
+                    }
+                    // } else if(change.type === 'removed') {
+                    //     // callback(change.doc.data(), change.doc.id); // bugs, have problem with this
+                        
+                    // };
                 });
         });
     }
@@ -46,6 +51,8 @@ class Product {
         })
         return finish;
     };
+
+        
 };
 
 

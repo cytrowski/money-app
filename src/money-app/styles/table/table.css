@@ -45,6 +45,9 @@
   width: 20px;
   text-align: center;
   display: inline-block;
-  fill: #F4F4F4;
+}
+
+.exit-btn {
+  cursor: pointer;
 }
 /*# sourceMappingURL=table.css.map */
