@@ -30,20 +30,21 @@ class Product {
     }
     updateBudget(budget, user){
         this.budget = budget;
-        localStorage.setItem('budget', budget); // zostawić?
         db.collection('users').doc(user).update({budget: budget});
 
     }
     async sumPrices(user){
-        return this.products.doc(user).collection('products').get().then(snapshot => {
+        let finish = [];
+        this.products.doc(user).collection('products').onSnapshot(snapshot => {
             let totalCount = 0;
             snapshot.forEach(doc => {
             totalCount += doc.data().price;
             });
             const a = totalCount;
-            return a;
-
-        }).catch(err => console.log(err));
+            finish.push(a);
+            return finish;
+        })
+        return finish;
     };
 };
 

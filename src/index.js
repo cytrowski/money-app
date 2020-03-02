@@ -62,17 +62,25 @@ auth.onAuthStateChanged(user => {
         // sum prices and output statistics to DOM
         products.sumPrices(user.uid).then(value1 => {
             db.collection('users').doc(user.uid).onSnapshot(snapshot => {
-                console.log(snapshot);
                 
-
-                sumStats.addStatsUI(value1, snapshot.data().budget);
-                
-                    // sumStats.addStatsUI('');
-                
-            
+                sumStats.addStatsUI(value1[0], snapshot.data().budget);
             })
             
         });
+        //add new products to firebase
+        expenseForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = expenseForm.productName.value.trim();
+        const price = Number(expenseForm.price.value.trim());
+    
+        console.log(`Product added: ${name}, ${price}`);
+        const user = firebase.auth().currentUser.uid;
+        products.addProduct(name, price, user)
+            .then(() => expenseForm.reset())
+            .catch(err => console.log(err));
+
+                   
+});
 
     // account info
         db.collection('users').doc(user.uid).get().then(doc => {
@@ -91,6 +99,7 @@ auth.onAuthStateChanged(user => {
             products.updateBudget(budget, user.uid);
             //reset form
             budgetForm.reset();
+            sumStats.addStatsUI('','');
             const budgetCart = document.querySelector('#budget');
             budgetCart.classList.remove('active');
         
@@ -107,7 +116,7 @@ auth.onAuthStateChanged(user => {
             console.log('user logged out');
             authUI('');
             productUI.render('');
-            sumStats.addStatsUI('');
+            
         }
 });
 
@@ -120,18 +129,7 @@ auth.onAuthStateChanged(user => {
 const showLogin = new Navbar(document.querySelector('.navbar'));
 showLogin.init();
 
-//add new products to firebase
-expenseForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = expenseForm.productName.value.trim();
-    const price = Number(expenseForm.price.value.trim());
-    
-    console.log(`Product added: ${name}, ${price}`);
-    const user = firebase.auth().currentUser.uid;
-    products.addProduct(name, price, user)
-        .then(() => expenseForm.reset())
-        .catch(err => console.log(err));
-});
+
 
 
 
