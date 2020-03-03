@@ -60,9 +60,18 @@ auth.onAuthStateChanged(user => {
         products.getProducts(((data, id) => {
             // console.log(id);
             productUI.render(data, id);
+
             
 
         }), user.uid);
+        // sum prices and output statistics to DOM
+        products.sumPrices(user.uid).then(value1 => {
+            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+                
+                sumStats.addStatsUI(value1[0], snapshot.data().budget);
+            })
+                    
+        });
         
         // delete products
         table.addEventListener('click', e => {
@@ -84,19 +93,19 @@ auth.onAuthStateChanged(user => {
                     
                         }, 3000);
                         productUI.delete(id);
+                        products.sumPrices(user.uid).then(value => {
+                            sumStats.addStatsUI('','');
+                            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+                        
+                                sumStats.addStatsUI(value[0], snapshot.data().budget);
+                            })
+                        });
 
                 })
             }
         });
         
-        // sum prices and output statistics to DOM
-        products.sumPrices(user.uid).then(value1 => {
-            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
-                
-                sumStats.addStatsUI(value1[0], snapshot.data().budget);
-            })
-            
-        });
+
         //add new products to firebase
         expenseForm.addEventListener('submit', e => {
         e.preventDefault();
@@ -106,7 +115,17 @@ auth.onAuthStateChanged(user => {
         console.log(`Product added: ${name}, ${price}`);
         const user = firebase.auth().currentUser.uid;
         products.addProduct(name, price, user)
-            .then(() => expenseForm.reset())
+            .then(() => {
+                products.sumPrices(user).then(value => {
+                    sumStats.addStatsUI('','');
+                    db.collection('users').doc(user).onSnapshot(snapshot => {
+                
+                        sumStats.addStatsUI(value[0], snapshot.data().budget);
+                    })
+                });
+                
+                expenseForm.reset()
+            })
             .catch(err => console.log(err));
                 
 });

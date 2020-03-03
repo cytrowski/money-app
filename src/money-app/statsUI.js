@@ -21,6 +21,15 @@ class Stats {
         this.stats.innerHTML = '';
         this.circle.innerHTML = '';
     }};
+    updateOutcome(data){
+        const outcome = document.querySelector('.outcome-value');
+        const value = Math.round(data * 100) / 100;
+
+        outcome.innerHTML = `${value}$`;
+
+
+
+    }
 };
 
 export { Stats as default };

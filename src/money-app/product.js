@@ -27,9 +27,6 @@ class Product {
                         callback(change.doc.data(), change.doc.id);
                     } else if(change.type === 'removed') {
 
-                        // console.log(tableTr[0])
-
-                        // callback(change.doc.data(), change.doc.id); 
                         
                     };
                 });
@@ -41,6 +38,7 @@ class Product {
 
     }
     async sumPrices(user){
+        
         let finish = [];
         this.products.doc(user).collection('products').onSnapshot(snapshot => {
             let totalCount = 0;
