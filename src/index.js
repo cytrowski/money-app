@@ -83,12 +83,8 @@ auth.onAuthStateChanged(user => {
                             updateMssg.classList.remove('act');
                     
                         }, 3000);
-                        const table = document.querySelector('.table-body');
-                        const tableTr = table.querySelectorAll('tr')
-                        tableTr.forEach(doc => {
-                            if(doc.getAttribute('data-id') === id){
-                            doc.remove();
-                        }})
+                        productUI.delete(id);
+
                 })
             }
         });
@@ -149,6 +145,7 @@ auth.onAuthStateChanged(user => {
             console.log('user logged out');
             authUI('');
             productUI.render('');
+            sumStats.addStatsUI('');
 
             
         }

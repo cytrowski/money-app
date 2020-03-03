@@ -18,7 +18,13 @@ class ProductUI {
     } else {
         this.list.innerHTML = '';
     }};
-
+    delete(id){
+        const tableTr = this.list.querySelectorAll('tr')
+        tableTr.forEach(doc => {
+            if(doc.getAttribute('data-id') === id){
+                doc.remove();
+        }})
+    }
 }
 
 export { ProductUI as default };
