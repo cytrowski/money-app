@@ -23,13 +23,15 @@ class Product {
                 snapshot.docChanges().forEach(change => {
                     if(change.type === 'added'){
                         //udpate UI
-                        // console.log(change.doc.id);
-                        callback(change.doc.data(), change.doc.id);
-                    }
-                    // } else if(change.type === 'removed') {
-                    //     // callback(change.doc.data(), change.doc.id); // bugs, have problem with this
                         
-                    // };
+                        callback(change.doc.data(), change.doc.id);
+                    } else if(change.type === 'removed') {
+
+                        // console.log(tableTr[0])
+
+                        // callback(change.doc.data(), change.doc.id); 
+                        
+                    };
                 });
         });
     }

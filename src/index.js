@@ -21,8 +21,7 @@ const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
 const budgetCircle = document.querySelector('.budget__circle');
 const account = document.querySelector('#acc');
-const tableTr = document.querySelectorAll('tr');
-console.log(tableTr);
+
 
 // ------------- AUTH FUNCTIONS -----------------------------
 // zostawic - moze sie przyda ten space
@@ -32,6 +31,7 @@ const loggedInLinks = document.querySelectorAll('.logged-in');
 const loggedOutLinks = document.querySelectorAll('.logged-out');
 const userData = document.querySelector('.main-container');
 const logoutMsg = document.querySelector('.logout-msg');
+
 
 const authUI = user => {
 if (user){
@@ -58,8 +58,9 @@ auth.onAuthStateChanged(user => {
 
         //get the products and render
         products.getProducts(((data, id) => {
-            
+            // console.log(id);
             productUI.render(data, id);
+            
 
         }), user.uid);
         
@@ -82,6 +83,12 @@ auth.onAuthStateChanged(user => {
                             updateMssg.classList.remove('act');
                     
                         }, 3000);
+                        const table = document.querySelector('.table-body');
+                        const tableTr = table.querySelectorAll('tr')
+                        tableTr.forEach(doc => {
+                            if(doc.getAttribute('data-id') === id){
+                            doc.remove();
+                        }})
                 })
             }
         });

@@ -18,15 +18,7 @@ class ProductUI {
     } else {
         this.list.innerHTML = '';
     }};
-    delete(table, id){ // its okey?
-        console.log(table);
-        table.forEach(product => {
-            if(product.getAttribute('data-id') === id){
-                console.log(product);
-                product.remove();
-            }
-        })
-    }
+
 }
 
 export { ProductUI as default };
