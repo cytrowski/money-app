@@ -49,6 +49,7 @@ if (user){
 }
 }
 
+const callbacks = []
 
 //listen for auth status changes
 auth.onAuthStateChanged(user => {
@@ -57,15 +58,17 @@ auth.onAuthStateChanged(user => {
         authUI(user);
 
         //get the products and render
-        products.getProducts(((data, id) => {
+        const unsubscribe = products.getProducts(((data, id) => {
             // console.log(id);
             productUI.render(data, id);
 
             
 
         }), user.uid);
+        callbacks.push(unsubscribe);
+
         // sum prices and output statistics to DOM
-        products.sumPrices(user.uid).then(value1 => {
+        products.sumPrices(user.uid, callbacks).then(value1 => {
             db.collection('users').doc(user.uid).onSnapshot(snapshot => {
                 
                 sumStats.addStatsUI(value1[0], snapshot.data().budget);
@@ -74,61 +77,66 @@ auth.onAuthStateChanged(user => {
         });
         
         // delete products
-        table.addEventListener('click', e => {
-            console.log(e);
-            if (e.target.tagName === 'BUTTON'){
-                const id = e.target.parentElement.parentElement.getAttribute('data-id');
-                db.collection('users')
-                    .doc(user.uid)
-                    .collection('products')
-                    .doc(id)
-                    .delete()
-                    .then(() => {
-                        // show message
-                        updateMssg.innerText = `Product was deleted`;
-                        updateMssg.classList.add('act');
-                        setTimeout(() => {
-                            updateMssg.innerText = '';
-                            updateMssg.classList.remove('act');
-                    
-                        }, 3000);
-                        productUI.delete(id);
-                        products.sumPrices(user.uid).then(value => {
-                            sumStats.addStatsUI('','');
-                            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
-                        
-                                sumStats.addStatsUI(value[0], snapshot.data().budget);
-                            })
-                        });
+        const handleTableClick = e => {
+          console.log(e);
+          if (e.target.tagName === 'BUTTON'){
+              const id = e.target.parentElement.parentElement.getAttribute('data-id');
+              db.collection('users')
+                  .doc(user.uid)
+                  .collection('products')
+                  .doc(id)
+                  .delete()
+                  .then(() => {
+                      // show message
+                      updateMssg.innerText = `Product was deleted`;
+                      updateMssg.classList.add('act');
+                      setTimeout(() => {
+                          updateMssg.innerText = '';
+                          updateMssg.classList.remove('act');
+                  
+                      }, 3000);
+                      productUI.delete(id);
+                      products.sumPrices(user.uid).then(value => {
+                          sumStats.addStatsUI('','');
+                          db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+                      
+                              sumStats.addStatsUI(value[0], snapshot.data().budget);
+                          })
+                      });
 
-                })
-            }
-        });
+              })
+          }
+        }
+        table.addEventListener('click', handleTableClick);
+        callbacks.push(() => table.removeEventListener('click', handleTableClick))
         
 
         //add new products to firebase
-        expenseForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const name = expenseForm.productName.value.trim();
-        const price = Number(expenseForm.price.value.trim());
-    
-        console.log(`Product added: ${name}, ${price}`);
-        const user = firebase.auth().currentUser.uid;
-        products.addProduct(name, price, user)
-            .then(() => {
-                products.sumPrices(user).then(value => {
-                    sumStats.addStatsUI('','');
-                    db.collection('users').doc(user).onSnapshot(snapshot => {
-                
-                        sumStats.addStatsUI(value[0], snapshot.data().budget);
-                    })
-                });
-                
-                expenseForm.reset()
-            })
-            .catch(err => console.log(err));
-                
-});
+        const handleExpenseFormSubmit = e => {
+          e.preventDefault();
+          const name = expenseForm.productName.value.trim();
+          const price = Number(expenseForm.price.value.trim());
+      
+          console.log(`Product added: ${name}, ${price}`);
+          const user = firebase.auth().currentUser.uid;
+          products.addProduct(name, price, user)
+              .then(() => {
+                  products.sumPrices(user).then(value => {
+                      sumStats.addStatsUI('','');
+                      const unsubscribe = db.collection('users').doc(user).onSnapshot(snapshot => {
+                  
+                          sumStats.addStatsUI(value[0], snapshot.data().budget);
+                      })
+                      callbacks.push(unsubscribe)
+                  });
+                  
+                  expenseForm.reset()
+              })
+              .catch(err => console.log(err));
+                  
+        }
+        expenseForm.addEventListener('submit', handleExpenseFormSubmit);
+        callbacks.push(() => expenseForm.removeEventListener('submit', handleExpenseFormSubmit))
 
     // account info
         db.collection('users').doc(user.uid).get().then(doc => {
@@ -140,33 +148,36 @@ auth.onAuthStateChanged(user => {
         account.innerHTML += html;
         });
 
-        budgetForm.addEventListener('submit', e => {
-            e.preventDefault();
-            //update budget 
-            const budget = parseInt(budgetForm.budget_value.value.trim());
-            products.updateBudget(budget, user.uid);
-            //reset form
-            budgetForm.reset();
-            sumStats.addStatsUI('','');
-            const budgetCart = document.querySelector('#budget');
-            budgetCart.classList.remove('active');
-        
-            // show message
-            updateMssg.innerText = `Your budget was updated to ${budget}$`;
-            updateMssg.classList.add('act');
-            setTimeout(() => {
-                updateMssg.innerText = '';
-                updateMssg.classList.remove('act');
-        
-            }, 3000);
-        })
+        const handleBudgetFormSubmit = e => {
+          e.preventDefault();
+          //update budget 
+          const budget = parseInt(budgetForm.budget_value.value.trim());
+          products.updateBudget(budget, user.uid);
+          //reset form
+          budgetForm.reset();
+          sumStats.addStatsUI('','');
+          const budgetCart = document.querySelector('#budget');
+          budgetCart.classList.remove('active');
+      
+          // show message
+          updateMssg.innerText = `Your budget was updated to ${budget}$`;
+          updateMssg.classList.add('act');
+          setTimeout(() => {
+              updateMssg.innerText = '';
+              updateMssg.classList.remove('act');
+      
+          }, 3000);
+        }
+        budgetForm.addEventListener('submit', handleBudgetFormSubmit);
+        callbacks.push(() => budgetForm.removeEventListener('submit', handleBudgetFormSubmit))
         } else {
             console.log('user logged out');
             authUI('');
             productUI.render('');
             sumStats.addStatsUI('');
 
-            
+            callbacks.forEach(callback => callback())
+            callbacks.length = 0;
         }
 });
 
