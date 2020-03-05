@@ -17,7 +17,7 @@ class Product {
         return response;
     }
     getProducts(callback, user){ //pobiera liste z firebase
-        this.products.doc(user).collection('products')
+        return this.products.doc(user).collection('products')
             .orderBy("created_at", "desc")
             .onSnapshot(snapshot => {
                 snapshot.docChanges().forEach(change => {
@@ -36,13 +36,19 @@ class Product {
         if(budget.length >= 1){
         this.budget = budget;
         db.collection('users').doc(user).update({budget: budget});
+<<<<<<< HEAD
     } else {
         console.log('no');
     }}
     async sumPrices(user){
+=======
+
+    }
+    async sumPrices(user, callbacks){
+>>>>>>> 3967d02892bca7b1fcda9496bbb0170aac860476
         
         let finish = [];
-        this.products.doc(user).collection('products').onSnapshot(snapshot => {
+        const unsubscribe = this.products.doc(user).collection('products').onSnapshot(snapshot => {
             let totalCount = 0;
             snapshot.forEach(doc => {
             totalCount += doc.data().price;
@@ -51,6 +57,7 @@ class Product {
             finish.push(a);
             return finish;
         })
+        callbacks.push(unsubscribe)
         return finish;
     };
 
