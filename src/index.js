@@ -23,6 +23,7 @@ const budgetCircle = document.querySelector('.budget__circle');
 const account = document.querySelector('#acc');
 
 
+
 // ------------- AUTH FUNCTIONS -----------------------------
 // zostawic - moze sie przyda ten space
 
@@ -51,8 +52,9 @@ if (user){
 
 
 //listen for auth status changes
-auth.onAuthStateChanged(user => {
+const unsubscribe = auth.onAuthStateChanged(user => {
     if (user){
+        
         console.log('user logged in:', user.uid); // test
         authUI(user);
 
@@ -143,11 +145,14 @@ auth.onAuthStateChanged(user => {
         budgetForm.addEventListener('submit', e => {
             e.preventDefault();
             //update budget 
-            const budget = parseInt(budgetForm.budget_value.value.trim());
+            const budget = budgetForm.budget_value.value.trim();
+            console.log(budget);
             products.updateBudget(budget, user.uid);
+            // unsubscribe();
+            console.log(budget);
             //reset form
             budgetForm.reset();
-            sumStats.addStatsUI('','');
+            sumStats.addStatsUI('', '');
             const budgetCart = document.querySelector('#budget');
             budgetCart.classList.remove('active');
         
@@ -159,12 +164,22 @@ auth.onAuthStateChanged(user => {
                 updateMssg.classList.remove('act');
         
             }, 3000);
+
+            // logout
+            logout.addEventListener('click', e => {
+                e.preventDefault();
+                // unsubscribe();
+                auth.signOut();
+            })
+
         })
         } else {
             console.log('user logged out');
             authUI('');
             productUI.render('');
             sumStats.addStatsUI('');
+            
+            // products.updateBudget('','');
 
             
         }

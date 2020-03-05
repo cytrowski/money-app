@@ -28,11 +28,7 @@ signupForm.addEventListener('submit', e => {
         });
 })
 
-// logout
-logout.addEventListener('click', e => {
-    e.preventDefault();
-    auth.signOut();
-})
+
 
 //login 
 loginForm.addEventListener('submit', e => {

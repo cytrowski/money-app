@@ -33,10 +33,12 @@ class Product {
         });
     }
     updateBudget(budget, user){
+        if(budget.length >= 1){
         this.budget = budget;
         db.collection('users').doc(user).update({budget: budget});
-
-    }
+    } else {
+        console.log('no');
+    }}
     async sumPrices(user){
         
         let finish = [];
