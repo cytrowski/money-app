@@ -13,39 +13,31 @@ class Product {
             price: price,
             created_at: firebase.firestore.Timestamp.fromDate(now),
         };
-        const response = await this.products.doc(user).collection('products').add(product);
+        const response = this.products.doc(user).collection('products').add(product);
         return response;
     }
     getProducts(callback, user){ //pobiera liste z firebase
-        return this.products.doc(user).collection('products')
+        this.products.doc(user).collection('products')
             .orderBy("created_at", "desc")
             .onSnapshot(snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if(change.type === 'added'){
                         //udpate UI
                         
-                        callback(change.doc.data(), change.doc.id);
-                    } else if(change.type === 'removed') {
-
-                        
-                    };
+                        return callback(change.doc.data(), change.doc.id);
+                    } 
                 });
+                
+                
         });
     }
     updateBudget(budget, user){
-        if(budget.length >= 1){
+       
         this.budget = budget;
         db.collection('users').doc(user).update({budget: budget});
-<<<<<<< HEAD
-    } else {
-        console.log('no');
-    }}
-    async sumPrices(user){
-=======
-
+        // callbacks.push(unsubscribe);
     }
     async sumPrices(user, callbacks){
->>>>>>> 3967d02892bca7b1fcda9496bbb0170aac860476
         
         let finish = [];
         const unsubscribe = this.products.doc(user).collection('products').onSnapshot(snapshot => {
@@ -53,11 +45,13 @@ class Product {
             snapshot.forEach(doc => {
             totalCount += doc.data().price;
             });
+            
             const a = totalCount;
+            console.log(a);
             finish.push(a);
             return finish;
         })
-        callbacks.push(unsubscribe)
+        callbacks.push(unsubscribe);
         return finish;
     };
 

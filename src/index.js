@@ -23,7 +23,6 @@ const budgetCircle = document.querySelector('.budget__circle');
 const account = document.querySelector('#acc');
 
 
-
 // ------------- AUTH FUNCTIONS -----------------------------
 // zostawic - moze sie przyda ten space
 
@@ -53,9 +52,8 @@ if (user){
 const callbacks = []
 
 //listen for auth status changes
-const unsubscribe = auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(user => {
     if (user){
-        
         console.log('user logged in:', user.uid); // test
         authUI(user);
 
@@ -64,23 +62,22 @@ const unsubscribe = auth.onAuthStateChanged(user => {
             // console.log(id);
             productUI.render(data, id);
 
-            
-
         }), user.uid);
         callbacks.push(unsubscribe);
 
         // sum prices and output statistics to DOM
         products.sumPrices(user.uid, callbacks).then(value1 => {
-            db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+            const unsubscribe = db.collection('users').doc(user.uid).onSnapshot(snapshot => {
                 
                 sumStats.addStatsUI(value1[0], snapshot.data().budget);
             })
-                    
+            callbacks.push(unsubscribe);      
         });
+        
         
         // delete products
         const handleTableClick = e => {
-          console.log(e);
+          console.log(e); // mouseevent
           if (e.target.tagName === 'BUTTON'){
               const id = e.target.parentElement.parentElement.getAttribute('data-id');
               db.collection('users')
@@ -98,13 +95,15 @@ const unsubscribe = auth.onAuthStateChanged(user => {
                   
                       }, 3000);
                       productUI.delete(id);
-                      products.sumPrices(user.uid).then(value => {
+                      products.sumPrices(user.uid, callbacks).then(value => {
                           sumStats.addStatsUI('','');
-                          db.collection('users').doc(user.uid).onSnapshot(snapshot => {
-                      
-                              sumStats.addStatsUI(value[0], snapshot.data().budget);
+                          const unsubscribe = db.collection('users').doc(user.uid).get().then(snapshot => {
+                            console.log(snapshot.data().budget);
+                            sumStats.addStatsUI(value[0], snapshot.data().budget);
                           })
+                          callbacks.push(unsubscribe);
                       });
+                      
 
               })
           }
@@ -123,66 +122,38 @@ const unsubscribe = auth.onAuthStateChanged(user => {
           const user = firebase.auth().currentUser.uid;
           products.addProduct(name, price, user)
               .then(() => {
-                  products.sumPrices(user).then(value => {
+                  products.sumPrices(user, callbacks).then(value => {
                       sumStats.addStatsUI('','');
                       const unsubscribe = db.collection('users').doc(user).onSnapshot(snapshot => {
                   
                           sumStats.addStatsUI(value[0], snapshot.data().budget);
                       })
-                      callbacks.push(unsubscribe)
+                      callbacks.push(unsubscribe);
                   });
-                  
                   expenseForm.reset()
               })
               .catch(err => console.log(err));
-                  
+                 
         }
         expenseForm.addEventListener('submit', handleExpenseFormSubmit);
         callbacks.push(() => expenseForm.removeEventListener('submit', handleExpenseFormSubmit))
 
     // account info
-        db.collection('users').doc(user.uid).get().then(doc => {
+        const getAccountInfo = () => {
+        const unsubscribe = db.collection('users').doc(user.uid).onSnapshot(doc => {
         const html = `
             <div class="accInfo">
+            <img src="assets/img/user.png" alt="user_icon" class="accInfo__user">
             <div class="accInfo__email">Logged in as <span class="info">${user.email}</span></div>
             <div class="accInfo__budget">Your budget: <span class="info">${doc.data().budget}$</span></div></div>
         `;
-        account.innerHTML += html;
+        account.innerHTML = html;
         });
-
-<<<<<<< HEAD
-        budgetForm.addEventListener('submit', e => {
-            e.preventDefault();
-            //update budget 
-            const budget = budgetForm.budget_value.value.trim();
-            console.log(budget);
-            products.updateBudget(budget, user.uid);
-            // unsubscribe();
-            console.log(budget);
-            //reset form
-            budgetForm.reset();
-            sumStats.addStatsUI('', '');
-            const budgetCart = document.querySelector('#budget');
-            budgetCart.classList.remove('active');
+        callbacks.push(unsubscribe);
         
-            // show message
-            updateMssg.innerText = `Your budget was updated to ${budget}$`;
-            updateMssg.classList.add('act');
-            setTimeout(() => {
-                updateMssg.innerText = '';
-                updateMssg.classList.remove('act');
-        
-            }, 3000);
+    };
+        getAccountInfo();
 
-            // logout
-            logout.addEventListener('click', e => {
-                e.preventDefault();
-                // unsubscribe();
-                auth.signOut();
-            })
-
-        })
-=======
         const handleBudgetFormSubmit = e => {
           e.preventDefault();
           //update budget 
@@ -202,20 +173,22 @@ const unsubscribe = auth.onAuthStateChanged(user => {
               updateMssg.classList.remove('act');
       
           }, 3000);
+          
         }
         budgetForm.addEventListener('submit', handleBudgetFormSubmit);
         callbacks.push(() => budgetForm.removeEventListener('submit', handleBudgetFormSubmit))
->>>>>>> 3967d02892bca7b1fcda9496bbb0170aac860476
-        } else {
+        
+    
+    
+    } else {
             console.log('user logged out');
             authUI('');
             productUI.render('');
             sumStats.addStatsUI('');
-            
-            // products.updateBudget('','');
 
             callbacks.forEach(callback => callback())
             callbacks.length = 0;
+ 
         }
 });
 

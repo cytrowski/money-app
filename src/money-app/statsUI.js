@@ -32,4 +32,4 @@ class Stats {
     }
 };
 
-export { Stats as default };
+export default Stats;
