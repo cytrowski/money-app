@@ -98,7 +98,7 @@ auth.onAuthStateChanged(user => {
                       products.sumPrices(user.uid).then(value => {
                           sumStats.addStatsUI('','');
                           const unsubscribe = db.collection('users').doc(user.uid).get().then(snapshot => {
-                            console.log(snapshot.data().budget);
+                            console.log('budget:', snapshot.data().budget);
                             sumStats.addStatsUI(value[0], snapshot.data().budget);
                           })
                           callbacks.push(unsubscribe);
@@ -154,14 +154,16 @@ auth.onAuthStateChanged(user => {
     };
         getAccountInfo();
 
+    //update budget + form
         const handleBudgetFormSubmit = e => {
           e.preventDefault();
           //update budget 
-          const budget = parseInt(budgetForm.budget_value.value.trim());
+          const budget = Number(budgetForm.budget_value.value.trim());
+          sumStats.addStatsUI('','');
           products.updateBudget(budget, user.uid);
           //reset form
           budgetForm.reset();
-          sumStats.addStatsUI('','');
+          
           const budgetCart = document.querySelector('#budget');
           budgetCart.classList.remove('active');
       

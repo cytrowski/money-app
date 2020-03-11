@@ -32,10 +32,10 @@ class Product {
         });
     }
     updateBudget(budget, user){
-       
-        this.budget = budget;
+        console.log('budget', budget, user);
+        // this.budget = budget;
         db.collection('users').doc(user).update({budget: budget});
-        // callbacks.push(unsubscribe);
+    
     }
     async sumPrices(user){
         
