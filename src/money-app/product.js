@@ -37,7 +37,7 @@ class Product {
         db.collection('users').doc(user).update({budget: budget});
         // callbacks.push(unsubscribe);
     }
-    async sumPrices(user, callbacks){
+    async sumPrices(user){
         
         let finish = [];
         const unsubscribe = this.products.doc(user).collection('products').onSnapshot(snapshot => {
@@ -47,11 +47,11 @@ class Product {
             });
             
             const a = totalCount;
-            console.log(a);
+            console.log(a, 'total count');
             finish.push(a);
+            unsubscribe();
             return finish;
         })
-        callbacks.push(unsubscribe);
         return finish;
     };
 
