@@ -66,7 +66,7 @@ auth.onAuthStateChanged(user => {
         callbacks.push(unsubscribe);
 
         // sum prices and output statistics to DOM
-        products.sumPrices(user.uid, callbacks).then(value1 => {
+        products.sumPrices(user.uid).then(value1 => {
             const unsubscribe = db.collection('users').doc(user.uid).onSnapshot(snapshot => {
                 
                 sumStats.addStatsUI(value1[0], snapshot.data().budget);
@@ -95,7 +95,7 @@ auth.onAuthStateChanged(user => {
                   
                       }, 3000);
                       productUI.delete(id);
-                      products.sumPrices(user.uid, callbacks).then(value => {
+                      products.sumPrices(user.uid).then(value => {
                           sumStats.addStatsUI('','');
                           const unsubscribe = db.collection('users').doc(user.uid).get().then(snapshot => {
                             console.log(snapshot.data().budget);
@@ -122,7 +122,7 @@ auth.onAuthStateChanged(user => {
           const user = firebase.auth().currentUser.uid;
           products.addProduct(name, price, user)
               .then(() => {
-                  products.sumPrices(user, callbacks).then(value => {
+                  products.sumPrices(user).then(value => {
                       sumStats.addStatsUI('','');
                       const unsubscribe = db.collection('users').doc(user).onSnapshot(snapshot => {
                   
