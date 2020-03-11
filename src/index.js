@@ -71,7 +71,7 @@ auth.onAuthStateChanged(user => {
                 
                 sumStats.addStatsUI(value1[0], snapshot.data().budget);
             })
-            callbacks.push(unsubscribe);      
+            callbacks.push(unsubscribe);
         });
         
         
@@ -97,11 +97,11 @@ auth.onAuthStateChanged(user => {
                       productUI.delete(id);
                       products.sumPrices(user.uid).then(value => {
                           sumStats.addStatsUI('','');
-                          const unsubscribe = db.collection('users').doc(user.uid).get().then(snapshot => {
+                          db.collection('users').doc(user.uid).get().then(snapshot => {
                             console.log('budget:', snapshot.data().budget);
                             sumStats.addStatsUI(value[0], snapshot.data().budget);
                           })
-                          callbacks.push(unsubscribe);
+                          
                       });
                       
 
@@ -124,11 +124,11 @@ auth.onAuthStateChanged(user => {
               .then(() => {
                   products.sumPrices(user).then(value => {
                       sumStats.addStatsUI('','');
-                      const unsubscribe = db.collection('users').doc(user).onSnapshot(snapshot => {
+                        db.collection('users').doc(user).onSnapshot(snapshot => {
                   
                           sumStats.addStatsUI(value[0], snapshot.data().budget);
                       })
-                      callbacks.push(unsubscribe);
+
                   });
                   expenseForm.reset()
               })
@@ -187,12 +187,13 @@ auth.onAuthStateChanged(user => {
             authUI('');
             productUI.render('');
             sumStats.addStatsUI('');
-
+            console.log(callbacks);
             callbacks.forEach(callback => callback())
             callbacks.length = 0;
  
         }
 });
+
 
 
 
