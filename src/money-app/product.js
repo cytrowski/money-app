@@ -1,5 +1,8 @@
+import firebase from 'firebase';
+
 class Product {
   constructor(name, price, budget, user) {
+    const db = firebase.firestore();
     this.products = db.collection('users');
     this.budget = budget;
     this.name = name;

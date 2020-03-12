@@ -1,10 +1,12 @@
+import { format } from 'date-fns';
+
 class ProductUI {
   constructor(list) {
     this.list = list;
   }
   render(data, id) {
     if (data) {
-      const when = dateFns.format(data.created_at.toDate(), 'DD.MM.YYYY');
+      const when = format(data.created_at.toDate(), 'dd.mm.yyyy');
       const html = `
         <tr data-id="${id}">
         <td>${when}</td>

@@ -10,6 +10,12 @@ import Product from './money-app/product';
 import ProductUI from './money-app/productUI';
 import Stats from './money-app/statsUI';
 
+import './money-app/setupFirebase';
+import firebase from 'firebase';
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
 //query selectors
 const table = document.querySelector('.table-body');
 const expenseForm = document.querySelector('.expense');
