@@ -17,8 +17,6 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 //query selectors
-const table = document.querySelector('.table-body');
-const expenseForm = document.querySelector('.expense');
 const budgetForm = document.querySelector('.budget-form');
 const updateMssg = document.querySelector('.update-msg');
 const stats = document.querySelector('.stats');
@@ -54,6 +52,9 @@ const callbacks = [];
 
 //listen for auth status changes
 auth.onAuthStateChanged(user => {
+  const table = document.querySelector('.table-body');
+  const productUI = new ProductUI(table);
+
   if (user) {
     console.log('user logged in:', user.uid); // test
     authUI(user);
@@ -111,6 +112,7 @@ auth.onAuthStateChanged(user => {
     table.addEventListener('click', handleTableClick);
     callbacks.push(() => table.removeEventListener('click', handleTableClick));
 
+    const expenseForm = document.querySelector('.expense');
     //add new products to firebase
     const handleExpenseFormSubmit = e => {
       e.preventDefault();
@@ -208,5 +210,4 @@ const budget = localStorage.budget ? localStorage.budget : 0;
 
 //class instances
 const products = new Product('pierogi', '22,39');
-const productUI = new ProductUI(table);
 const sumStats = new Stats(stats, budgetCircle, budget);
