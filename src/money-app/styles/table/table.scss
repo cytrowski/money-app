@@ -1,33 +1,31 @@
-$table-head-color: #100DAE;
+$table-head-color: #100dae;
 $table-first-color: #fff;
-$table-second-color: #F4F4F4;
-$main-color: linear-gradient(#2DB626, #AEDC49);
+$table-second-color: #f4f4f4;
+$main-color: linear-gradient(#2db626, #aedc49);
 
 @mixin FlexCenter($justify, $direction) {
-    display: flex;
-    justify-content: $justify;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+  flex-direction: $direction;
 }
-
 
 .table-content {
-    border-collapse: collapse; 
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 .table {
-    min-width: 450px;
-    background: $table-first-color;
-    margin-top: 20px;
-    
+  min-width: 450px;
+  background: $table-first-color;
+  margin-top: 20px;
 }
 
 .table-content thead tr {
-    background-color: $table-head-color;
-    text-align: left;
-    color: $table-first-color;
-    width: 100%;
-    font-weight: bold;
+  background-color: $table-head-color;
+  text-align: left;
+  color: $table-first-color;
+  width: 100%;
+  font-weight: bold;
 }
 
 .table-content th,
@@ -36,27 +34,27 @@ $main-color: linear-gradient(#2DB626, #AEDC49);
   text-align: left;
 }
 .table-content th:last-child {
-    text-align: center;
-    margin: 0;
-    padding: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 .table-content tr {
-    border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 
-.table-content tbody tr:nth-of-type(even) { // zmienia co drugi kolor
-    background-color: $table-second-color;
+.table-content tbody tr:nth-of-type(even) {
+  // zmienia co drugi kolor
+  background-color: $table-second-color;
 }
-  
-  .table-content tbody tr:last-of-type {
-    border-bottom: 2px solid $table-head-color;
+
+.table-content tbody tr:last-of-type {
+  border-bottom: 2px solid $table-head-color;
 }
 .trash-icon {
-    width: 20px;
-    text-align: center;
-    display: inline-block;
-    
+  width: 20px;
+  text-align: center;
+  display: inline-block;
 }
 .exit-btn {
-    cursor: pointer;
+  cursor: pointer;
 }

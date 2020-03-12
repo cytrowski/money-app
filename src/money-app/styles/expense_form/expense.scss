@@ -1,31 +1,31 @@
-$table-head-color: #100DAE;
+$table-head-color: #100dae;
 $table-first-color: #fff;
-$table-second-color: #F4F4F4;
-$main-color: linear-gradient(#2DB626, #AEDC49);
+$table-second-color: #f4f4f4;
+$main-color: linear-gradient(#2db626, #aedc49);
 
 @mixin FlexCenter($justify, $direction) {
-    display: flex;
-    justify-content: $justify;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+  flex-direction: $direction;
 }
 
 .expense {
-    background: $table-first-color;
-    min-width: 450px;
-    height: 300px;
-    @include FlexCenter(center, row !important); 
-    margin-top: 20px;
-    font-size: 24px;
-    
-    .form-control {
-        width: 300px;
-        height: 30px;
-        margin-top: 10px;
-    }
-    .btn {
-        width: 140px;
-        height: 33px;
-        font-size: 14px;
-    }
+  background: $table-first-color;
+  min-width: 450px;
+  height: 300px;
+  @include FlexCenter(center, row !important);
+  margin-top: 20px;
+  font-size: 24px;
+
+  .form-control {
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .btn {
+    width: 140px;
+    height: 33px;
+    font-size: 14px;
+  }
 }
