@@ -7,19 +7,19 @@ nav {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   margin: 0;
   padding: 0;
   -webkit-box-shadow: 5px 2px 15px #b9b9b9;
-          box-shadow: 5px 2px 15px #b9b9b9;
+  box-shadow: 5px 2px 15px #b9b9b9;
   height: 100%;
 }
 
@@ -30,22 +30,28 @@ nav .nav {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   z-index: 5;
   height: 100%;
   width: 100px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#2DB626), to(#AEDC49));
-  background: linear-gradient(#2DB626, #AEDC49);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#2db626),
+    to(#aedc49)
+  );
+  background: linear-gradient(#2db626, #aedc49);
 }
 
 nav .nav__pick {
@@ -86,21 +92,21 @@ nav .nav__logout:hover {
   display: none;
   height: 100%;
   width: 200px;
-  background: #F4F4F4;
+  background: #f4f4f4;
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   left: -200px;
   -webkit-transition: all 1s;
   transition: all 1s;

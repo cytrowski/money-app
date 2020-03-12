@@ -1,40 +1,40 @@
-$table-head-color: #100DAE;
+$table-head-color: #100dae;
 $table-first-color: #fff;
-$table-second-color: #F4F4F4;
-$main-color: linear-gradient(#2DB626, #AEDC49);
+$table-second-color: #f4f4f4;
+$main-color: linear-gradient(#2db626, #aedc49);
 
 @mixin FlexCenter($justify, $direction) {
-    display: flex;
-    justify-content: $justify;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+  flex-direction: $direction;
 }
 
 .stats {
-    margin-right: 20px;
-    min-width: 450px;
-    background: $table-first-color;
-    height: 300px;
-    margin-top: 20px;
-    @include FlexCenter(center, column);
-    font-size: 24px;
-    text-align: left;
+  margin-right: 20px;
+  min-width: 450px;
+  background: $table-first-color;
+  height: 300px;
+  margin-top: 20px;
+  @include FlexCenter(center, column);
+  font-size: 24px;
+  text-align: left;
 }
 .budget-name {
-    font-weight: bolder;
-    display: inline-block;
-    margin-right: 200px;
-    text-align: left;
-    width: 50px;
+  font-weight: bolder;
+  display: inline-block;
+  margin-right: 200px;
+  text-align: left;
+  width: 50px;
 }
 .stat-value {
-    text-align: left;
-    width: 50px;
-    display: inline-block;
+  text-align: left;
+  width: 50px;
+  display: inline-block;
 }
 .last-value {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 .outcome-value {
-    color: red;
+  color: red;
 }

@@ -10,7 +10,7 @@
 }
 
 .table-content thead tr {
-  background-color: #100DAE;
+  background-color: #100dae;
   text-align: left;
   color: #fff;
   width: 100%;
@@ -34,11 +34,11 @@
 }
 
 .table-content tbody tr:nth-of-type(even) {
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
 }
 
 .table-content tbody tr:last-of-type {
-  border-bottom: 2px solid #100DAE;
+  border-bottom: 2px solid #100dae;
 }
 
 .trash-icon {

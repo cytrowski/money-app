@@ -1,86 +1,84 @@
-$table-head-color: #100DAE;
+$table-head-color: #100dae;
 $table-first-color: #fff;
-$table-second-color: #F4F4F4;
-$main-color: linear-gradient(#2DB626, #AEDC49);
+$table-second-color: #f4f4f4;
+$main-color: linear-gradient(#2db626, #aedc49);
 $box-shadow: rgb(185, 185, 185);
 
 @mixin FlexCenter($justify, $direction) {
-    display: flex;
-    justify-content: $justify;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+  flex-direction: $direction;
 }
 
 nav {
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  @include FlexCenter(center, row);
+  margin: 0;
+  padding: 0;
+  box-shadow: 5px 2px 15px $box-shadow;
+  height: 100%;
 
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top:0;
-    @include FlexCenter(center, row);
-    margin: 0;
-    padding: 0;
-    box-shadow: 5px 2px 15px $box-shadow;
+  .nav {
+    list-style: none;
+    margin-left: -40px;
+    @include FlexCenter(center, column);
     height: 100%;
-    
-    .nav {
-        list-style: none;
-        margin-left: -40px;
-        @include FlexCenter(center, column);
-        height: 100%;
-        width: 100%;
-        z-index: 5;
-        height: 100%;
-        width: 100px;
-        background: $main-color;
-        
-        &__pick {   
-            padding-top: 10px;
-            padding-bottom: 10px;
-            transition: all 0.25s;
-            width: 100%;
-            color: $table-first-color;
-            cursor: pointer;
-            text-align: center;
-            
-            &:hover {
-                background: rgba(0, 0, 0, 0.157);
-                letter-spacing: 0.08em;
-                font-size: 1.1em;
-            }
-        }
-        &__logout {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            transition: all 0.25s;
-            width: 100%;
-            color: $table-first-color;
-            cursor: pointer;
-            text-align: center;
-            
-            &:hover {
-                background: rgba(0, 0, 0, 0.157);
-                letter-spacing: 0.08em;
-                font-size: 1.1em;
-            }
-        }
-        
+    width: 100%;
+    z-index: 5;
+    height: 100%;
+    width: 100px;
+    background: $main-color;
+
+    &__pick {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      transition: all 0.25s;
+      width: 100%;
+      color: $table-first-color;
+      cursor: pointer;
+      text-align: center;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.157);
+        letter-spacing: 0.08em;
+        font-size: 1.1em;
+      }
     }
+    &__logout {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      transition: all 0.25s;
+      width: 100%;
+      color: $table-first-color;
+      cursor: pointer;
+      text-align: center;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.157);
+        letter-spacing: 0.08em;
+        font-size: 1.1em;
+      }
+    }
+  }
 }
 .slide_menu {
-    display: none;
-    height: 100%;
-    width: 200px;
-    background: #F4F4F4;
-    position: absolute;
-    @include FlexCenter(center, row);
-    left: -200px;
-    transition: all 1s;
-    z-index: 1; 
-    overflow: hidden;
+  display: none;
+  height: 100%;
+  width: 200px;
+  background: #f4f4f4;
+  position: absolute;
+  @include FlexCenter(center, row);
+  left: -200px;
+  transition: all 1s;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .active {
-    left: 100px;
-    z-index: 1;
+  left: 100px;
+  z-index: 1;
 }
