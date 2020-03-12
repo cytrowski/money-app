@@ -36,4 +36,4 @@ class Navbar {
   }
 }
 
-export { Navbar as default };
+export default Navbar;

@@ -31,4 +31,4 @@ class ProductUI {
   }
 }
 
-export { ProductUI as default };
+export default ProductUI;
