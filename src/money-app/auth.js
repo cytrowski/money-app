@@ -1,4 +1,4 @@
-// import Navbar from './money-app/navbar';
+import { signUp, signOut, signIn } from './services/auth';
 
 //querySelectors
 const signupForm = document.querySelector('.signup-form');
@@ -11,28 +11,19 @@ signupForm.addEventListener('submit', e => {
 
   const email = signupForm['signup-login'].value;
   const password = signupForm['signup-password'].value;
+  const signupBudget = signupForm['signup-budget'].value;
 
-  auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(data => {
-      return db
-        .collection('users')
-        .doc(data.user.uid)
-        .set({
-          budget: signupForm['signup-budget'].value,
-        });
-    })
-    .then(() => {
-      signupForm.reset();
-      signupForm.parentElement.classList.remove('active');
-    });
+  signUp(email, password, signupBudget).then(() => {
+    signupForm.reset();
+    signupForm.parentElement.classList.remove('active');
+  });
 });
 
 // logout1
 logout.addEventListener('click', e => {
   e.preventDefault();
 
-  auth.signOut();
+  signOut();
 });
 
 //login
@@ -42,7 +33,7 @@ loginForm.addEventListener('submit', e => {
   const email = loginForm['login_name'].value;
   const password = loginForm['password'].value;
 
-  auth.signInWithEmailAndPassword(email, password).then(data => {
+  signIn(email, password).then(data => {
     loginForm.reset();
     loginForm.parentElement.classList.remove('active');
   });
