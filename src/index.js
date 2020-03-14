@@ -61,7 +61,7 @@ auth.onAuthStateChanged(user => {
 
     //get the products and render
     const unsubscribe = products.getProducts((data, id) => {
-      // console.log(id);
+      console.log(data, id);
       productUI.render(data, id);
     }, user.uid);
     callbacks.push(unsubscribe);
@@ -74,6 +74,7 @@ auth.onAuthStateChanged(user => {
         .onSnapshot(snapshot => {
           sumStats.addStatsUI(value1[0], snapshot.data().budget);
         });
+
       callbacks.push(unsubscribe);
     });
 
@@ -96,6 +97,7 @@ auth.onAuthStateChanged(user => {
               updateMssg.classList.remove('act');
             }, 3000);
             productUI.delete(id);
+
             products.sumPrices(user.uid).then(value => {
               sumStats.addStatsUI('', '');
               db.collection('users')
@@ -179,6 +181,7 @@ auth.onAuthStateChanged(user => {
       // show message
       updateMssg.innerText = `Your budget was updated to ${budget}$`;
       updateMssg.classList.add('act');
+
       setTimeout(() => {
         updateMssg.innerText = '';
         updateMssg.classList.remove('act');
@@ -193,7 +196,7 @@ auth.onAuthStateChanged(user => {
     authUI('');
     productUI.render('');
     sumStats.addStatsUI('');
-    console.log(callbacks);
+    console.log('Callbacks array', callbacks);
     callbacks.forEach(callback => callback());
     callbacks.length = 0;
   }

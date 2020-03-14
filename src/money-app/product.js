@@ -24,7 +24,7 @@ class Product {
     return response;
   }
   getProducts(callback, user) {
-    //pobiera liste z firebase
+    //download list from firebase
     this.products
       .doc(user)
       .collection('products')
@@ -33,7 +33,6 @@ class Product {
         snapshot.docChanges().forEach(change => {
           if (change.type === 'added') {
             //udpate UI
-
             return callback(change.doc.data(), change.doc.id);
           }
         });
@@ -41,6 +40,7 @@ class Product {
   }
   updateBudget(budget, user) {
     console.log('budget', budget, user);
+    const db = firebase.firestore();
     // this.budget = budget;
     db.collection('users')
       .doc(user)
