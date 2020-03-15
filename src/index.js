@@ -13,36 +13,40 @@ import Stats from './money-app/statsUI';
 import './money-app/setupFirebase';
 import firebase from 'firebase';
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+const qs = document.querySelector.bind(document);
+const qsa = document.querySelectorAll.bind(document);
 
-//query selectors
-const budgetForm = document.querySelector('.budget-form');
-const updateMssg = document.querySelector('.update-msg');
-const stats = document.querySelector('.stats');
-const budgetCircle = document.querySelector('.budget__circle');
-const account = document.querySelector('#acc');
-
-// ------------- AUTH FUNCTIONS -----------------------------
-// zostawic - moze sie przyda ten space
-
-// setup UI login/logout
-const loggedInLinks = document.querySelectorAll('.logged-in');
-const loggedOutLinks = document.querySelectorAll('.logged-out');
-const userData = document.querySelector('.main-container');
-const logoutMsg = document.querySelector('.logout-msg');
+const budgetForm = qs('.budget-form');
+const updateMssg = qs('.update-msg');
+const stats = qs('.stats');
+const budgetCircle = qs('.budget__circle');
+const account = qs('#acc');
 
 const authUI = user => {
+  const userData = qs('.main-container');
+  const logoutMsg = qs('.logout-msg');
+
+  const loggedInLinks = qsa('.logged-in');
+  const loggedOutLinks = qsa('.logged-out');
+
   if (user) {
     //toggle nav UI elements
-    loggedInLinks.forEach(item => (item.style.display = 'block'));
-    loggedOutLinks.forEach(item => (item.style.display = 'none'));
+    loggedInLinks.forEach(item => {
+      item.style.display = 'block';
+    });
+    loggedOutLinks.forEach(item => {
+      item.style.display = 'none';
+    });
     logoutMsg.style.display = 'none';
     userData.style.display = 'grid';
   } else {
     //toggle nav UI elements
-    loggedInLinks.forEach(item => (item.style.display = 'none'));
-    loggedOutLinks.forEach(item => (item.style.display = 'block'));
+    loggedInLinks.forEach(item => {
+      item.style.display = 'none';
+    });
+    loggedOutLinks.forEach(item => {
+      item.style.display = 'block';
+    });
     logoutMsg.style.display = 'block';
     userData.style.display = 'none';
   }
@@ -60,13 +64,14 @@ const sumStats = new Stats(stats, budgetCircle, budget);
 const products = new Product('pierogi', '22,39');
 
 //listen for auth status changes
-auth.onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged(user => {
   const table = document.querySelector('.table-body');
   const productUI = new ProductUI(table);
+  const usersCollection = firebase.firestore().collection('users');
+
+  authUI(user);
 
   if (user) {
-    authUI(user);
-
     //get the products and render
     const unsubscribe = products.getProducts((data, id) => {
       productUI.render(data, id);
@@ -87,10 +92,9 @@ auth.onAuthStateChanged(user => {
 
     // delete products
     const handleTableClick = e => {
-      console.log(e); // mouseevent
       if (e.target.tagName === 'BUTTON') {
         const id = e.target.parentElement.parentElement.getAttribute('data-id');
-        db.collection('users')
+        usersCollection
           .doc(user.uid)
           .collection('products')
           .doc(id)
@@ -107,7 +111,7 @@ auth.onAuthStateChanged(user => {
 
             products.sumPrices(user.uid).then(value => {
               sumStats.addStatsUI('', '');
-              db.collection('users')
+              usersCollection
                 .doc(user.uid)
                 .get()
                 .then(snapshot => {
@@ -135,11 +139,9 @@ auth.onAuthStateChanged(user => {
         .then(() => {
           products.sumPrices(user).then(value => {
             sumStats.addStatsUI('', '');
-            db.collection('users')
-              .doc(user)
-              .onSnapshot(snapshot => {
-                sumStats.addStatsUI(value[0], snapshot.data().budget);
-              });
+            usersCollection.doc(user).onSnapshot(snapshot => {
+              sumStats.addStatsUI(value[0], snapshot.data().budget);
+            });
           });
           expenseForm.reset();
         })
@@ -152,11 +154,8 @@ auth.onAuthStateChanged(user => {
 
     // account info
     const getAccountInfo = () => {
-      const unsubscribe = db
-        .collection('users')
-        .doc(user.uid)
-        .onSnapshot(doc => {
-          const html = `
+      const unsubscribe = usersCollection.doc(user.uid).onSnapshot(doc => {
+        const html = `
             <div class="accInfo">
             <img src="assets/img/user.png" alt="user_icon" class="accInfo__user">
             <div class="accInfo__email">Logged in as <span class="info">${
@@ -166,8 +165,8 @@ auth.onAuthStateChanged(user => {
               doc.data().budget
             }$</span></div></div>
         `;
-          account.innerHTML = html;
-        });
+        account.innerHTML = html;
+      });
       callbacks.push(unsubscribe);
     };
     getAccountInfo();
@@ -199,8 +198,6 @@ auth.onAuthStateChanged(user => {
       budgetForm.removeEventListener('submit', handleBudgetFormSubmit)
     );
   } else {
-    console.log('user logged out');
-    authUI('');
     productUI.render('');
     sumStats.addStatsUI('');
     console.log('Callbacks array', callbacks);
