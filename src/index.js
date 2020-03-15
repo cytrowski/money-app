@@ -5,7 +5,7 @@ import './money-app/styles/budget/budget.css';
 import './money-app/styles/expense_form/expense.css';
 import './money-app/styles/table/table.css';
 import './money-app/styles/stats/stats.css';
-import Navbar from './money-app/navbar';
+import { initNavigation } from './money-app/navbar';
 import Product from './money-app/product';
 import ProductUI from './money-app/productUI';
 import Stats from './money-app/statsUI';
@@ -50,18 +50,25 @@ const authUI = user => {
 
 const callbacks = [];
 
+initNavigation();
+
+// add / update budget ----------------------------------------
+const budget = localStorage.budget ? localStorage.budget : 0;
+
+const sumStats = new Stats(stats, budgetCircle, budget);
+
+const products = new Product('pierogi', '22,39');
+
 //listen for auth status changes
 auth.onAuthStateChanged(user => {
   const table = document.querySelector('.table-body');
   const productUI = new ProductUI(table);
 
   if (user) {
-    console.log('user logged in:', user.uid); // test
     authUI(user);
 
     //get the products and render
     const unsubscribe = products.getProducts((data, id) => {
-      console.log(data, id);
       productUI.render(data, id);
     }, user.uid);
     callbacks.push(unsubscribe);
@@ -201,16 +208,3 @@ auth.onAuthStateChanged(user => {
     callbacks.length = 0;
   }
 });
-
-// animate login cart
-const showLogin = new Navbar(document.querySelector('.navbar'));
-showLogin.init();
-
-// add / update budget ----------------------------------------
-const budget = localStorage.budget ? localStorage.budget : 0;
-
-// ------------------------------------------------------------
-
-//class instances
-const products = new Product('pierogi', '22,39');
-const sumStats = new Stats(stats, budgetCircle, budget);
