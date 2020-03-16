@@ -1,4 +1,3 @@
-import './money-app/auth.js';
 import './money-app/styles/main.css';
 import './money-app/styles/navbar/navbar.css';
 import './money-app/styles/budget/budget.css';
@@ -12,6 +11,47 @@ import Stats from './money-app/statsUI';
 
 import './money-app/setupFirebase';
 import firebase from 'firebase';
+
+import { signUp, signOut, signIn } from './money-app/services/auth';
+
+//querySelectors
+const signupForm = document.querySelector('.signup-form');
+const logout = document.querySelector('#logout');
+const loginForm = document.querySelector('.login-form');
+
+// signup user
+signupForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const email = signupForm['signup-login'].value;
+  const password = signupForm['signup-password'].value;
+  const signupBudget = signupForm['signup-budget'].value;
+
+  signUp(email, password, signupBudget).then(() => {
+    signupForm.reset();
+    signupForm.parentElement.classList.remove('active');
+  });
+});
+
+// logout1
+logout.addEventListener('click', e => {
+  e.preventDefault();
+
+  signOut();
+});
+
+//login
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  //get user info
+  const email = loginForm['login_name'].value;
+  const password = loginForm['password'].value;
+
+  signIn(email, password).then(data => {
+    loginForm.reset();
+    loginForm.parentElement.classList.remove('active');
+  });
+});
 
 const qs = document.querySelector.bind(document);
 const qsa = document.querySelectorAll.bind(document);
@@ -80,12 +120,9 @@ firebase.auth().onAuthStateChanged(user => {
 
     // sum prices and output statistics to DOM
     products.sumPrices(user.uid).then(value1 => {
-      const unsubscribe = db
-        .collection('users')
-        .doc(user.uid)
-        .onSnapshot(snapshot => {
-          sumStats.addStatsUI(value1[0], snapshot.data().budget);
-        });
+      const unsubscribe = usersCollection.doc(user.uid).onSnapshot(snapshot => {
+        sumStats.addStatsUI(value1[0], snapshot.data().budget);
+      });
 
       callbacks.push(unsubscribe);
     });
