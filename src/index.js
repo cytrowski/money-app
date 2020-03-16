@@ -8,7 +8,14 @@ import './money-app/styles/stats/stats.css';
 import './money-app/setupFirebase';
 import firebase from 'firebase';
 
-import { signUp, signOut, signIn } from './money-app/services/auth';
+import {
+  signUp,
+  signOut,
+  signIn,
+  addProduct,
+  subscribeForProducts,
+  getSumOfPrices,
+} from './money-app/services/all';
 
 import { format } from 'date-fns';
 
@@ -71,73 +78,6 @@ class Stats {
     const value = Math.round(data * 100) / 100;
 
     outcome.innerHTML = `${value}$`;
-  }
-}
-
-class Product {
-  constructor(name, price, budget, user) {
-    const db = firebase.firestore();
-    this.products = db.collection('users');
-    this.budget = budget;
-    this.name = name;
-    this.price = price;
-    this.user = user;
-  }
-  async addProduct(name, price, user) {
-    //dodaje produkt do firebase
-    const now = new Date();
-    const product = {
-      name: name,
-      price: price,
-      created_at: firebase.firestore.Timestamp.fromDate(now),
-    };
-    const response = this.products
-      .doc(user)
-      .collection('products')
-      .add(product);
-    return response;
-  }
-  getProducts(callback, user) {
-    //download list from firebase
-    this.products
-      .doc(user)
-      .collection('products')
-      .orderBy('created_at', 'desc')
-      .onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(change => {
-          if (change.type === 'added') {
-            //udpate UI
-            return callback(change.doc.data(), change.doc.id);
-          }
-        });
-      });
-  }
-  updateBudget(budget, user) {
-    console.log('budget', budget, user);
-    const db = firebase.firestore();
-    // this.budget = budget;
-    db.collection('users')
-      .doc(user)
-      .update({ budget: budget });
-  }
-  async sumPrices(user) {
-    let finish = [];
-    const unsubscribe = this.products
-      .doc(user)
-      .collection('products')
-      .onSnapshot(snapshot => {
-        let totalCount = 0;
-        snapshot.forEach(doc => {
-          totalCount += doc.data().price;
-        });
-
-        const a = totalCount;
-        console.log(a, 'total count');
-        finish.push(a);
-        unsubscribe();
-        return finish;
-      });
-    return finish;
   }
 }
 
@@ -253,8 +193,6 @@ const budget = localStorage.budget ? localStorage.budget : 0;
 
 const sumStats = new Stats(stats, budgetCircle, budget);
 
-const products = new Product('pierogi', '22,39');
-
 //listen for auth status changes
 firebase.auth().onAuthStateChanged(user => {
   const table = document.querySelector('.table-body');
@@ -265,15 +203,15 @@ firebase.auth().onAuthStateChanged(user => {
 
   if (user) {
     //get the products and render
-    const unsubscribe = products.getProducts((data, id) => {
+    const unsubscribe = subscribeForProducts((data, id) => {
       productUI.render(data, id);
     }, user.uid);
     callbacks.push(unsubscribe);
 
     // sum prices and output statistics to DOM
-    products.sumPrices(user.uid).then(value1 => {
+    getSumOfPrices(user.uid).then(value => {
       const unsubscribe = usersCollection.doc(user.uid).onSnapshot(snapshot => {
-        sumStats.addStatsUI(value1[0], snapshot.data().budget);
+        sumStats.addStatsUI(value, snapshot.data().budget);
       });
 
       callbacks.push(unsubscribe);
@@ -298,14 +236,14 @@ firebase.auth().onAuthStateChanged(user => {
             }, 3000);
             productUI.delete(id);
 
-            products.sumPrices(user.uid).then(value => {
+            getSumOfPrices(user.uid).then(value => {
               sumStats.addStatsUI('', '');
               usersCollection
                 .doc(user.uid)
                 .get()
                 .then(snapshot => {
                   console.log('budget:', snapshot.data().budget);
-                  sumStats.addStatsUI(value[0], snapshot.data().budget);
+                  sumStats.addStatsUI(value, snapshot.data().budget);
                 });
             });
           });
@@ -323,13 +261,12 @@ firebase.auth().onAuthStateChanged(user => {
 
       console.log(`Product added: ${name}, ${price}`);
       const user = firebase.auth().currentUser.uid;
-      products
-        .addProduct(name, price, user)
+      addProduct(name, price, user)
         .then(() => {
-          products.sumPrices(user).then(value => {
+          getSumOfPrices(user).then(value => {
             sumStats.addStatsUI('', '');
             usersCollection.doc(user).onSnapshot(snapshot => {
-              sumStats.addStatsUI(value[0], snapshot.data().budget);
+              sumStats.addStatsUI(value, snapshot.data().budget);
             });
           });
           expenseForm.reset();
@@ -366,7 +303,7 @@ firebase.auth().onAuthStateChanged(user => {
       //update budget
       const budget = Number(budgetForm.budget_value.value.trim());
       sumStats.addStatsUI('', '');
-      products.updateBudget(budget, user.uid);
+      updateBudget(budget, user.uid);
       //reset form
       budgetForm.reset();
 
@@ -389,7 +326,6 @@ firebase.auth().onAuthStateChanged(user => {
   } else {
     productUI.render('');
     sumStats.addStatsUI('');
-    console.log('Callbacks array', callbacks);
     callbacks.forEach(callback => callback());
     callbacks.length = 0;
   }
