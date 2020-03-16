@@ -4,14 +4,142 @@ import './money-app/styles/budget/budget.css';
 import './money-app/styles/expense_form/expense.css';
 import './money-app/styles/table/table.css';
 import './money-app/styles/stats/stats.css';
-import Product from './money-app/product';
-import ProductUI from './money-app/productUI';
-import Stats from './money-app/statsUI';
 
 import './money-app/setupFirebase';
 import firebase from 'firebase';
 
 import { signUp, signOut, signIn } from './money-app/services/auth';
+
+import { format } from 'date-fns';
+
+class ProductUI {
+  constructor(list) {
+    this.list = list;
+  }
+  render(data, id) {
+    if (data) {
+      const when = format(data.created_at.toDate(), 'dd.mm.yyyy');
+      const html = `
+        <tr data-id="${id}">
+        <td>${when}</td>
+        <td>${data.name}</td>
+        <td>${data.price} $</td>
+        <td><button class="exit-btn">X</button></td>
+        </tr>
+        `;
+
+      this.list.innerHTML += html;
+    } else {
+      this.list.innerHTML = '';
+    }
+  }
+  delete(id) {
+    const tableTr = this.list.querySelectorAll('tr');
+    tableTr.forEach(doc => {
+      if (doc.getAttribute('data-id') === id) {
+        doc.remove();
+      }
+    });
+  }
+}
+
+class Stats {
+  constructor(stats, circle, budget) {
+    this.stats = stats;
+    this.circle = circle;
+    this.budget = budget;
+  }
+  addStatsUI(data, budget) {
+    if (data) {
+      const outcome = Math.round(data * 100) / 100;
+      const sumAll = Math.round((budget - outcome) * 100) / 100;
+
+      this.stats.innerHTML = `
+        <div><span class="budget-name">Budget: </span>  <span class="stat-value">${budget}$</span></div>
+        <div><span class="budget-name">Outcome: </span> <span class="stat-value outcome-value">${outcome}$</span></div>
+        <div><span class="budget-name">All: </span> <span class="stat-value last-value">${sumAll}$</span></div>
+        `;
+      const circle = Math.round(((outcome * 100) / budget) * 100) / 100;
+      this.circle.innerHTML = `${circle}%`;
+    } else {
+      this.stats.innerHTML = '';
+      this.circle.innerHTML = '';
+    }
+  }
+  updateOutcome(data) {
+    const outcome = document.querySelector('.outcome-value');
+    const value = Math.round(data * 100) / 100;
+
+    outcome.innerHTML = `${value}$`;
+  }
+}
+
+class Product {
+  constructor(name, price, budget, user) {
+    const db = firebase.firestore();
+    this.products = db.collection('users');
+    this.budget = budget;
+    this.name = name;
+    this.price = price;
+    this.user = user;
+  }
+  async addProduct(name, price, user) {
+    //dodaje produkt do firebase
+    const now = new Date();
+    const product = {
+      name: name,
+      price: price,
+      created_at: firebase.firestore.Timestamp.fromDate(now),
+    };
+    const response = this.products
+      .doc(user)
+      .collection('products')
+      .add(product);
+    return response;
+  }
+  getProducts(callback, user) {
+    //download list from firebase
+    this.products
+      .doc(user)
+      .collection('products')
+      .orderBy('created_at', 'desc')
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          if (change.type === 'added') {
+            //udpate UI
+            return callback(change.doc.data(), change.doc.id);
+          }
+        });
+      });
+  }
+  updateBudget(budget, user) {
+    console.log('budget', budget, user);
+    const db = firebase.firestore();
+    // this.budget = budget;
+    db.collection('users')
+      .doc(user)
+      .update({ budget: budget });
+  }
+  async sumPrices(user) {
+    let finish = [];
+    const unsubscribe = this.products
+      .doc(user)
+      .collection('products')
+      .onSnapshot(snapshot => {
+        let totalCount = 0;
+        snapshot.forEach(doc => {
+          totalCount += doc.data().price;
+        });
+
+        const a = totalCount;
+        console.log(a, 'total count');
+        finish.push(a);
+        unsubscribe();
+        return finish;
+      });
+    return finish;
+  }
+}
 
 //querySelectors
 const signupForm = document.querySelector('.signup-form');
