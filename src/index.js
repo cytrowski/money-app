@@ -4,7 +4,6 @@ import './money-app/styles/budget/budget.css';
 import './money-app/styles/expense_form/expense.css';
 import './money-app/styles/table/table.css';
 import './money-app/styles/stats/stats.css';
-import { initNavigation } from './money-app/navbar';
 import Product from './money-app/product';
 import ProductUI from './money-app/productUI';
 import Stats from './money-app/statsUI';
@@ -94,7 +93,32 @@ const authUI = user => {
 
 const callbacks = [];
 
-initNavigation();
+const container = qs('.navbar');
+
+const cqs = container.querySelector.bind(container);
+const cqsa = container.querySelectorAll.bind(container);
+
+const nav = cqsa('.nav__pick');
+const login = cqsa('.slide_menu');
+const loggedInLinks = cqsa('.logged-in');
+const loggedOutLinks = cqsa('.logged-out');
+
+const userData = cqs('.main-container');
+
+const slideMenu = e => {
+  //add class active
+  const selector = e.target.getAttribute('data-target');
+  const content = container.querySelector(selector);
+  content.classList.toggle('active');
+};
+
+nav.forEach(nav => {
+  nav.addEventListener('click', e => {
+    if (e.target.tagName === 'LI') {
+      slideMenu(e);
+    }
+  });
+});
 
 // add / update budget ----------------------------------------
 const budget = localStorage.budget ? localStorage.budget : 0;
